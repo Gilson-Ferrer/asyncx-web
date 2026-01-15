@@ -3,71 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASYNCX | Central de Integridade</title>
+    <title>ASYNCX | Área Restrita</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .status-on { color: #22c55e; text-shadow: 0 0 20px rgba(34, 197, 94, 0.6); }
-        .status-off { color: #ef4444; text-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
-        .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.05); }
+        .premium-shadow { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05); }
+        .status-on { color: #22c55e; } /* Verde suave */
+        .status-off { color: #94a3b8; } /* Cinza neutro */
+        
+        .pulse-green { animation: pulseG 2s infinite; }
+        @keyframes pulseG { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        input::placeholder { color: #94a3b8; font-size: 14px; }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+<body class="text-gray-900 overflow-x-hidden">
 
-    <div id="loginSection" class="w-full max-w-md glass p-10 rounded-[40px] shadow-2xl fade-in">
-        <div class="text-center mb-8">
-            <h1 class="text-2xl font-black italic tracking-tighter text-blue-500">ASYNCX</h1>
-            <p class="text-[10px] uppercase tracking-[0.3em] text-gray-500 font-bold">Security Intelligence</p>
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-10 md:h-12 w-auto"></a>
+            <button onclick="location.reload()" id="btnSair" class="hidden bg-gray-100 text-gray-500 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-gray-200 transition">
+                Sair
+            </button>
         </div>
-        
-        <h2 class="text-lg font-bold text-center mb-8 uppercase italic tracking-widest text-gray-300">Acesso ao Terminal</h2>
-        
-        <div class="space-y-4">
-            <input type="email" id="email" placeholder="E-mail Cadastrado" class="w-full p-4 bg-white/5 rounded-2xl outline-none border border-white/10 focus:border-blue-600 transition text-sm">
-            <input type="password" id="senha" placeholder="Token de Segurança" class="w-full p-4 bg-white/5 rounded-2xl outline-none border border-white/10 focus:border-blue-600 transition text-sm">
-            <button onclick="fazerLogin()" id="btnLogin" class="w-full bg-blue-600 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-lg shadow-blue-900/20 text-xs">Autenticar</button>
+    </nav>
+
+    <main id="loginSection" class="max-w-7xl mx-auto px-6 py-20 flex justify-center items-center min-h-[70vh]">
+        <div class="w-full max-w-md text-center">
+            <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Identificação Necessária</span>
+            <h2 class="text-4xl font-black tracking-tighter mb-10 leading-none">Acesso ao <br>Terminal de Dados.</h2>
+            
+            <div class="space-y-3">
+                <input type="email" id="email" placeholder="E-mail Corporativo" class="w-full p-5 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-transparent focus:bg-white">
+                <input type="password" id="senha" placeholder="Token de Segurança" class="w-full p-5 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-transparent focus:bg-white">
+                <button onclick="fazerLogin()" id="btnLogin" class="w-full bg-black text-white py-5 rounded-full text-sm font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-xl mt-4">
+                    Autenticar Sessão
+                </button>
+            </div>
+            <p class="mt-8 text-gray-400 text-[10px] uppercase tracking-widest font-bold italic">Criptografia de ponta-a-ponta ASYNCX</p>
         </div>
-    </div>
+    </main>
 
-    <div id="dashboardSection" class="hidden w-full max-w-5xl fade-in">
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-            <div>
-                <p class="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em]">Sessão Identificada</p>
-                <h1 id="clienteNome" class="text-3xl md:text-4xl font-black tracking-tighter mt-1 italic uppercase underline decoration-blue-600 decoration-4 underline-offset-8">---</h1>
-            </div>
-            <button onclick="location.reload()" class="text-[10px] font-bold text-gray-500 border border-gray-800 px-6 py-3 rounded-full hover:bg-white/5 transition">FINALIZAR SESSÃO</button>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass p-8 rounded-[35px] flex flex-col items-center justify-center min-h-[220px]">
-                <p class="text-[10px] font-bold text-gray-500 uppercase mb-6 tracking-widest">Integridade do Sistema</p>
-                <div id="statusLed" class="text-5xl font-black mb-2 pulse">●</div>
-                <p id="statusTxt" class="text-xs font-black uppercase tracking-widest mt-2">VERIFICANDO...</p>
-            </div>
-
-            <div class="glass p-8 rounded-[35px] flex flex-col justify-center min-h-[220px]">
-                <p class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Plano de Proteção</p>
-                <p id="servicoTxt" class="text-xl font-black italic uppercase text-white">---</p>
-                <div class="h-1 w-12 bg-blue-600 mt-4"></div>
-                <p class="text-[10px] text-gray-400 mt-4 font-medium italic">Monitoramento MSSP Ativo pela ASYNCX</p>
-            </div>
-
-            <div class="glass p-8 rounded-[35px] flex flex-col justify-center gap-3 min-h-[220px]">
-                <p class="text-[10px] font-bold text-gray-500 uppercase mb-2 tracking-widest text-center">Documentação</p>
-                <a id="btnLaudo" href="#" target="_blank" class="w-full text-center bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] font-black hover:bg-blue-600 hover:border-blue-600 transition uppercase tracking-widest">Baixar Laudo Técnico</a>
-                <a id="btnFinanceiro" href="#" target="_blank" class="w-full text-center bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] font-black hover:bg-white/20 transition uppercase tracking-widest opacity-40" id="finLink">Financeiro / NF</a>
-            </div>
+    <main id="dashboardSection" class="hidden max-w-7xl mx-auto px-6 py-16 animate-fade-in">
+        <div class="mb-16 text-center md:text-left">
+            <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block italic">Dashboard de Integridade</span>
+            <h2 id="clienteNome" class="text-3xl md:text-5xl font-light tracking-tight text-gray-900 italic uppercase">---</h2>
+            <div class="h-[2px] bg-blue-600 w-20 mt-4 mx-auto md:mx-0"></div>
         </div>
-        
-        <footer class="mt-12 text-center">
-            <p class="text-[9px] text-gray-600 font-bold uppercase tracking-[0.5em]">Sistema de Auditoria Gerenciada v2.0</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="glass p-10 rounded-[40px] premium-shadow flex flex-col items-center text-center">
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6">Sincronização Ativa</p>
+                <div id="statusLed" class="text-5xl mb-2">●</div>
+                <h3 id="statusTxt" class="text-xs font-bold uppercase tracking-widest">Verificando...</h3>
+            </div>
+
+            <div class="glass p-10 rounded-[40px] premium-shadow">
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6">Plano de Segurança</p>
+                <h3 id="servicoTxt" class="text-xl font-bold italic tracking-tighter mb-2 italic">---</h3>
+                <p class="text-[10px] text-gray-400 font-medium uppercase tracking-widest">Ativo pela AsyncX Solutions</p>
+            </div>
+
+            <div id="containerDocumentos" class="glass p-10 rounded-[40px] premium-shadow">
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 text-center">Base de Documentos</p>
+                <div id="docsList" class="space-y-3">
+                    </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-24 py-10 border-t border-gray-100 flex justify-between items-center opacity-30">
+            <img src="logo.png" class="h-6 grayscale">
+            <p class="text-[9px] font-black uppercase tracking-[0.4em]">Protocolo MSSP v2.0</p>
         </footer>
-    </div>
+    </main>
 
     <script>
         async function fazerLogin() {
@@ -75,13 +88,10 @@
             const senha = document.getElementById('senha').value;
             const btn = document.getElementById('btnLogin');
 
-            if(!email || !senha) return alert("Preencha todos os campos.");
-
             btn.disabled = true;
-            btn.innerText = "VALIDANDO CREDENCIAIS...";
+            btn.innerText = "VERIFICANDO...";
 
             try {
-                // Rota do seu backend no Render
                 const response = await fetch('https://asyncx-backend.onrender.com/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -93,73 +103,61 @@
                 if (response.ok) {
                     carregarDashboard(result.data);
                 } else {
-                    alert(result.message || "Falha na autenticação.");
+                    alert(result.message);
                     btn.disabled = false;
-                    btn.innerText = "ENTRAR NO SISTEMA";
+                    btn.innerText = "Autenticar Sessão";
                 }
             } catch (err) {
-                alert("Erro: O servidor ASYNCX não respondeu.");
+                alert("Falha técnica no servidor.");
                 btn.disabled = false;
-                btn.innerText = "ENTRAR NO SISTEMA";
             }
         }
+
         function carregarDashboard(user) {
-            console.log("Dados recebidos do banco:", user); // Para debug
-
-            // Esconde Login, Mostra Dashboard
-            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
+            document.getElementById('btnSair').classList.remove('hidden');
 
-            // Preenche os dados básicos
+            // Nome elegante (Font light)
             document.getElementById('clienteNome').innerText = user.nome;
-            document.getElementById('servicoTxt').innerText = user.servico || "SERVIÇO AVULSO";
+            document.getElementById('servicoTxt').innerText = user.servico || "AVULSO";
 
             const led = document.getElementById('statusLed');
             const txt = document.getElementById('statusTxt');
-            
-            // O segredo está aqui: o backend envia como 'status' (vindo de MONITORAMENTO_STATUS)
-            // Forçamos o uppercase para evitar erro de 'on' vs 'ON'
             const statusLimpo = user.status ? user.status.toUpperCase().trim() : 'OFF';
 
             if (statusLimpo === 'ON') {
-                led.className = "text-5xl font-black mb-2 pulse status-on";
-                txt.innerText = "SISTEMA PROTEGIDO";
-                txt.className = "text-xs font-black uppercase tracking-widest mt-2 status-on";
+                led.className = "text-5xl mb-2 status-on pulse-green";
+                txt.innerText = "Integridade Garantida";
+                txt.className = "text-xs font-bold uppercase tracking-widest status-on";
             } else {
-                led.className = "text-5xl font-black mb-2 pulse status-off";
-                txt.innerText = "MONITORAMENTO INATIVO";
-                txt.className = "text-xs font-black uppercase tracking-widest mt-2 status-off";
+                led.className = "text-5xl mb-2 status-off";
+                txt.innerText = "Acesso Offline";
+                txt.className = "text-xs font-bold uppercase tracking-widest status-off";
             }
 
-            // Lógica de Documentos Dinâmicos (Multi-links)
-            const containerDocs = document.getElementById('btnLaudo').parentElement;
-            containerDocs.innerHTML = '<p class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest text-center">Documentação</p>';
+            // Documentos
+            const list = document.getElementById('docsList');
+            list.innerHTML = '';
+
+            const criarBotao = (url, label, colorClass) => {
+                const btn = document.createElement('a');
+                btn.href = url.trim();
+                btn.target = "_blank";
+                btn.className = `block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition shadow-sm border ${colorClass}`;
+                btn.innerText = label;
+                list.appendChild(btn);
+            };
 
             if (user.linkLaudo) {
-                const links = user.linkLaudo.split(';');
-                links.forEach((link, index) => {
-                    if(link.trim() !== "") {
-                        const btn = document.createElement('a');
-                        btn.href = link.trim();
-                        btn.target = "_blank";
-                        btn.className = "w-full text-center bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] font-black hover:bg-blue-600 transition uppercase tracking-widest mb-2 block text-white";
-                        btn.innerText = `📄 LAUDO TÉCNICO ${links.length > 1 ? index + 1 : ''}`;
-                        containerDocs.appendChild(btn);
-                    }
+                user.linkLaudo.split(';').forEach((link, i) => {
+                    if(link) criarBotao(link, `📄 Laudo Técnico ${i+1}`, "bg-white text-blue-600 border-blue-50 hover:bg-blue-50");
                 });
             }
 
             if (user.linkBoleto) {
-                const boletos = user.linkBoleto.split(';');
-                boletos.forEach((link, index) => {
-                    if(link.trim() !== "") {
-                        const btn = document.createElement('a');
-                        btn.href = link.trim();
-                        btn.target = "_blank";
-                        btn.className = "w-full text-center bg-blue-900/20 border border-blue-500/30 py-3 rounded-xl text-[10px] font-black hover:bg-blue-600 transition uppercase tracking-widest mb-2 block text-white";
-                        btn.innerText = `💰 FINANCEIRO / NF ${boletos.length > 1 ? index + 1 : ''}`;
-                        containerDocs.appendChild(btn);
-                    }
+                user.linkBoleto.split(';').forEach((link, i) => {
+                    if(link) criarBotao(link, `💰 Financeiro ${i+1}`, "bg-black text-white border-black hover:bg-gray-800");
                 });
             }
         }
