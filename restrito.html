@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASYNCX | Portal do Cliente</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
         
         body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #111827; }
         
-        /* Estilo da Index: Glassmorphism leve em fundo branco */
         .glass { 
-            background: rgba(255, 255, 255, 0.7); 
+            background: rgba(255, 255, 255, 0.8); 
             backdrop-filter: blur(15px); 
-            border: 1px solid rgba(0, 0, 0, 0.05); 
+            border: 1px solid rgba(0, 0, 0, 0.04); 
         }
         
+        /* Sombra mais definida e elegante */
         .premium-shadow { 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
         }
 
-        .status-on { color: #2563eb; } /* Azul da logo para ON */
-        .status-off { color: #d1d5db; } /* Cinza claro para OFF */
+        .status-on { color: #2563eb; }
+        .status-off { color: #d1d5db; }
         
         .pulse-blue { animation: pulseB 2s infinite; }
         @keyframes pulseB { 
             0% { transform: scale(1); opacity: 1; } 
-            50% { transform: scale(1.1); opacity: 0.7; } 
+            50% { transform: scale(1.05); opacity: 0.8; } 
             100% { transform: scale(1); opacity: 1; } 
         }
 
@@ -64,15 +65,15 @@
     </main>
 
     <main id="dashboardSection" class="hidden max-w-7xl mx-auto px-6 py-16 w-full fade-in">
-        <div class="mb-16 text-center md:text-left">
-            <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block italic">Relatório em Tempo Real</span>
-            <h2 id="clienteNome" class="text-3xl md:text-5xl font-light tracking-tight italic uppercase text-gray-800">---</h2>
+        <div class="mb-12 text-center md:text-left">
+            <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block">Relatório em Tempo Real</span>
+            <h2 id="clienteNome" class="text-2xl md:text-4xl font-medium tracking-tight text-gray-800 uppercase">---</h2>
             <div class="h-1 bg-blue-600 w-16 mt-4 mx-auto md:mx-0"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             
-            <div class="glass p-10 rounded-[40px] premium-shadow text-center flex flex-col items-center justify-center border-t-4 border-t-blue-600">
+            <div class="glass p-10 rounded-[40px] premium-shadow text-center flex flex-col items-center justify-center">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6">Sincronização</p>
                 <div id="statusLed" class="text-5xl mb-2">●</div>
                 <h3 id="statusTxt" class="text-[10px] font-bold uppercase tracking-widest">---</h3>
@@ -86,15 +87,13 @@
 
             <div class="glass p-10 rounded-[40px] premium-shadow flex flex-col justify-center">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Documentação</p>
-                <div id="docsList" class="space-y-3">
-                    </div>
+                <div id="docsList" class="space-y-3"></div>
             </div>
 
         </div>
 
-        <footer class="mt-24 py-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6">
-            <img src="logo.png" class="h-6 opacity-30">
-            <p class="text-[9px] font-black text-gray-300 uppercase tracking-[0.5em] text-center italic">© 2026 ASYNCX - Tecnologia Forense</p>
+        <footer class="mt-24 py-10 border-t border-gray-100 flex flex-col md:flex-row justify-center items-center gap-6">
+            <p class="text-[9px] font-black text-gray-300 uppercase tracking-[0.5em] text-center">© 2026 ASYNCX - Tecnologia Forense</p>
         </footer>
     </main>
 
@@ -130,7 +129,6 @@
             document.getElementById('dashboardSection').classList.remove('hidden');
             document.getElementById('btnSair').classList.remove('hidden');
             
-            // Estilo minimalista para o nome
             document.getElementById('clienteNome').innerText = user.nome;
             document.getElementById('servicoTxt').innerText = user.servico || "AVULSO";
 
