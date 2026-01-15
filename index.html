@@ -185,11 +185,12 @@
     </div>
 
     <script>
-        // FORMULÁRIO
+
         document.getElementById('formContato').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnEnviar');
             const originalText = btn.innerHTML;
+            
             btn.disabled = true;
             btn.innerHTML = '<span class="animate-pulse text-[10px]">PROCESSANDO PROTOCOLO...</span>';
 
@@ -201,32 +202,29 @@
             };
 
             try {
-                // Testando a URL correta do Render
                 const response = await fetch('https://asyncx-backend.onrender.com/api/contato', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
+                const data = await response.json();
+
                 if (response.ok) {
-                    alert('Solicitação enviada com sucesso! Protocolo salvo no Oracle.');
+                    alert(data.message); 
                     e.target.reset();
                 } else { 
-                    // Se o servidor responder com erro (ex: 500 ou 404)
-                    const errorData = await response.json().catch(() => ({}));
-                    alert(`Erro do Servidor (${response.status}): ${errorData.message || 'Falha no processamento'}`);
+                    alert(`Erro ASYNCX-DB: ${data.message} (Código: ${data.oraCode || 'N/A'})`);
                 }
             } catch (err) {
-                // Se houver erro de rede (URL errada ou servidor offline)
                 console.error("Erro técnico:", err);
-                alert('Falha de Rede: Não foi possível alcançar o servidor ASYNCX. O Render pode estar "acordando" ou a URL mudou.');
+                alert('Falha Crítica: Não foi possível alcançar o centro de dados ASYNCX. Tente novamente em instantes.');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
             }
         });
 
-        // MODAL
         function abrirModal() {
             document.getElementById('modalDiagnostico').classList.remove('hidden');
             executarDiagnostico();
