@@ -4,86 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suporte Remoto | ASYNCX</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(229, 231, 235, 0.5); }
-        .btn-gradient { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s ease; }
-        .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.05); }
+        .premium-shadow { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+<body class="bg-white text-gray-900 antialiased">
 
-    <nav class="bg-white border-b border-gray-100 p-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <img src="logo.png" alt="ASYNCX" class="h-10">
-            <a href="index.html" class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-black transition">Voltar ao Início</a>
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-24">
+        <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+            <img src="logo.png" alt="ASYNCX" class="h-10 md:h-12 w-auto">
+            <a href="index.html" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition">Voltar ao Início</a>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
-        <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Assistência Técnica Segura</span>
-        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-6">Acesso Remoto <br><span class="text-gray-300 italic">Especializado.</span></h1>
-        <p class="text-gray-500 text-lg mb-12 max-w-2xl mx-auto">Siga as instruções abaixo para permitir que um técnico da ASYNCX realize a manutenção em seu dispositivo de forma segura e criptografada.</p>
+        <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Assistência Técnica Criptografada</span>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-6 leading-tight">Suporte Remoto <br><span class="text-gray-200">Especializado.</span></h1>
+        <p class="text-gray-500 text-base md:text-lg mb-12 max-w-2xl mx-auto">Siga as instruções para permitir que um especialista realize a manutenção preventiva ou corretiva em seu sistema.</p>
 
-        <div class="glass p-8 md:p-12 rounded-[40px] shadow-2xl mb-16 border-2 border-blue-50">
-            <h2 class="text-xl font-bold mb-6 italic">Clique no botão abaixo para iniciar</h2>
+        <div class="glass p-10 md:p-14 rounded-[40px] premium-shadow mb-16 border border-blue-50 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-blue-600"></div>
+            <h2 class="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-8">Módulo de Conexão Automática</h2>
             
             <a href="https://github.com/rustdesk/rustdesk/releases/download/1.2.3/rustdesk-1.2.3-x86_64.exe" 
-               download="rustdesk-host=suporte.asyncx.com.br,key=SUA_CHAVE_PUBLICA_AQUI.exe"
-               class="btn-gradient inline-flex items-center space-x-4 text-white px-12 py-6 rounded-full text-xl font-black shadow-xl mb-6 w-full md:w-auto justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               download="rustdesk-host=suporte.asyncx.com.br,key=HcHTPQQTgmKO1WE5HP6DAcMgboCpzYC3Bbn89ORo9DU=.exe"
+               class="inline-flex items-center space-x-3 bg-black text-white px-8 py-4 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-xl hover:scale-105 active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                <span>Baixar Conector ASYNCX</span>
+                <span>Baixar Assistente AsyncX</span>
             </a>
             
-            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M2.166 4.9L9.03 17.02c.38.67 1.35.67 1.73 0l6.865-12.12c.4-.7-.11-1.58-.91-1.58H3.076c-.8 0-1.31.88-.91 1.58zM10 13a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+            <p class="mt-8 text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em] flex items-center justify-center opacity-60">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M2.166 4.9L9.03 17.02c.38.67 1.35.67 1.73 0l6.865-12.12c.4-.7-.11-1.58-.91-1.58H3.076c-.8 0-1.31.88-.91 1.58z" clip-rule="evenodd" />
                 </svg>
-                Download seguro via HTTPS (SHA-256 Verified)
+                Conexão Segura AES-256 bits
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mb-16">
-            <div class="space-y-4">
-                <div class="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-black italic">01</div>
-                <h3 class="font-bold text-lg">Baixe e Abra</h3>
-                <p class="text-sm text-gray-500">Salve o arquivo em sua área de trabalho e execute-o. Não é necessário instalação.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left mb-20">
+            <div class="group">
+                <div class="text-blue-600 font-black text-xs mb-4 tracking-widest">01. DOWNLOAD</div>
+                <h3 class="font-bold text-lg mb-2">Execução Direta</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Abra o arquivo baixado. O conector não requer instalação no Windows.</p>
             </div>
-            <div class="space-y-4">
-                <div class="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-black italic">02</div>
-                <h3 class="font-bold text-lg">Autorize o Acesso</h3>
-                <p class="text-sm text-gray-500">Quando o programa abrir, ele já estará configurado com nosso servidor seguro.</p>
+            <div class="group">
+                <div class="text-blue-600 font-black text-xs mb-4 tracking-widest">02. AUTENTICAÇÃO</div>
+                <h3 class="font-bold text-lg mb-2">Servidor Próprio</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">O sistema reconhecerá nossa rede automaticamente via chave de segurança.</p>
             </div>
-            <div class="space-y-4">
-                <div class="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-black italic">03</div>
-                <h3 class="font-bold text-lg">Informe o seu ID</h3>
-                <p class="text-sm text-gray-500">Passe os números do "Seu ID" para o técnico via WhatsApp para iniciar.</p>
+            <div class="group">
+                <div class="text-blue-600 font-black text-xs mb-4 tracking-widest">03. CONEXÃO</div>
+                <h3 class="font-bold text-lg mb-2">ID de Acesso</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Forneça o número do ID ao técnico para autorizar o acesso remoto.</p>
             </div>
         </div>
 
-        <div class="bg-red-50 border border-red-100 rounded-[30px] p-8 text-left">
-            <h4 class="text-red-700 font-black uppercase text-xs tracking-widest mb-4">Protocolo de Segurança ASYNCX</h4>
-            <ul class="text-sm text-red-600 space-y-3 font-medium">
-                <li class="flex items-start">
-                    <span class="mr-2">•</span> 
-                    Jamais compartilhe sua senha de acesso com pessoas que não sejam técnicos oficiais da AsyncX.
-                </li>
-                <li class="flex items-start">
-                    <span class="mr-2">•</span> 
-                    Nossa equipe nunca solicitará dados bancários ou senhas pessoais durante o suporte remoto.
-                </li>
-                <li class="flex items-start">
-                    <span class="mr-2">•</span> 
-                    Você pode encerrar a sessão a qualquer momento fechando o aplicativo ou clicando em "Desconectar".
-                </li>
+        <div class="bg-gray-50 rounded-[30px] p-8 md:p-10 text-left border border-gray-100">
+            <h4 class="text-gray-900 font-black uppercase text-[10px] tracking-[0.3em] mb-6 flex items-center">
+                <span class="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                Protocolo de Segurança AsyncX
+            </h4>
+            <ul class="text-[13px] text-gray-500 space-y-4">
+                <li class="flex items-start italic"><span class="mr-3 font-bold text-gray-900">/</span> Jamais compartilhe sua senha de acesso com terceiros não autorizados.</li>
+                <li class="flex items-start italic"><span class="mr-3 font-bold text-gray-900">/</span> Nossa equipe nunca solicitará dados bancários durante o suporte.</li>
+                <li class="flex items-start italic"><span class="mr-3 font-bold text-gray-900">/</span> O encerramento da sessão pode ser feito por você a qualquer momento.</li>
             </ul>
         </div>
     </main>
 
     <footer class="py-12 border-t border-gray-100 text-center">
-        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest">© 2026 ASYNCX SOLUTIONS | SEGURANÇA FORENSE APLICADA</p>
+        <p class="text-[9px] font-bold text-gray-300 uppercase tracking-[0.4em]">© 2026 ASYNCX SOLUTIONS | TECNOLOGIA FORENSE</p>
     </footer>
 
 </body>
