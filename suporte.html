@@ -78,9 +78,51 @@
         </div>
     </main>
 
-    <footer class="py-12 border-t border-gray-100 text-center">
-        <p class="text-[9px] font-bold text-gray-300 uppercase tracking-[0.4em]">© 2026 ASYNCX SOLUTIONS | TECNOLOGIA FORENSE</p>
-    </footer>
+<footer class="bg-white border-t border-gray-100 pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center text-[10px] font-bold text-gray-300 uppercase tracking-widest text-center md:text-left gap-4">
+            <p>© 2026 ASYNCX SOLUTIONS. TODOS OS DIREITOS RESERVADOS.</p>
+            <p>INTELIGÊNCIA EM TI E SEGURANÇA DIGITAL</p>
+        </div>
+    </div>
+</footer>
+<script>
+    window.onload = function() {
+        const consent = localStorage.getItem('asyncx_privacy_consent');
+        if (!consent) {
+            document.getElementById('cookieBanner').classList.remove('hidden');
+        }
+    }
 
+    function aceitarCookies() {
+        localStorage.setItem('asyncx_privacy_consent', 'true');
+        document.getElementById('cookieBanner').classList.add('hidden');
+        console.log("Consentimento ASYNCX: Ativado");
+    }
+
+    function recusarCookies() {
+        // Mesmo recusando, escondemos o banner para não atrapalhar a navegação atual
+        document.getElementById('cookieBanner').classList.add('hidden');
+        console.log("Consentimento ASYNCX: Negado");
+    }
+</script>
+<div id="cookieBanner" class="fixed bottom-6 left-6 right-6 z-[100] hidden">
+    <div class="max-w-4xl mx-auto bg-white border border-gray-200 p-6 rounded-xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-left">
+            <p class="text-[11px] text-gray-400 font-black uppercase tracking-widest mb-1">Privacidade Respeitada</p>
+            <p class="text-xs text-gray-600 leading-relaxed max-w-2xl">
+                Utilizamos cookies estritamente técnicos para melhorar sua experiência. 
+                <span class="font-bold text-gray-900 text-[10px] block mt-1 uppercase italic">
+                    Não rastreamos você para fins publicitários. Seus dados são usados estritamente para o atendimento.
+                </span>
+                Ao continuar, você aceita nossa <a href="privacidade.html" class="underline hover:text-blue-600">Política de Privacidade</a>.
+            </p>
+        </div>
+        <div class="flex items-center gap-4 shrink-0">
+            <button onclick="recusarCookies()" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-red-600 transition">Rejeitar</button>
+            <button onclick="aceitarCookies()" class="bg-black text-white px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">Aceitar Tudo</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
