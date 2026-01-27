@@ -177,72 +177,82 @@
             } catch (err) { alert("Erro de conexão."); }
             finally { btn.disabled = false; btn.innerText = "Entrar"; }
         }
+    async function carregarDashboard(userBasicData) {
+        // 1. Setup inicial de visibilidade
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboardSection').classList.remove('hidden');
+        document.getElementById('btnSair').classList.remove('hidden');
 
-        async function carregarDashboard(userBasicData) {
-            // 1. Alterna a visibilidade das seções
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('setupSection').style.display = 'none';
-            document.getElementById('dashboardSection').classList.remove('hidden');
-            document.getElementById('btnSair').classList.remove('hidden');
-
-            // 2. Captura o e-mail (necessário para a Rota 6 do Backend)
-            const userEmail = userBasicData.email || document.getElementById('email').value;
-
-            try {
-                // Chamada para o Backend no Render
-                const response = await fetch(`${API_URL}/user/dashboard-data/${userEmail}`);
-                const data = await response.json();
-
-                if (data.success) {
-                    // MAPEMAENTO DE COLUNAS REAIS DO SEU BANCO
-                    document.getElementById('clienteNome').innerText = data.perfil.NOME_EXIBICAO.toUpperCase();
-                    
-                    // Dados de Monitoramento
-                    const led = document.getElementById('statusLed');
-                    const txt = document.getElementById('statusTxt');
-                    if (data.perfil.STATUS_MONITORAMENTO === 'ATIVO') {
-                        led.className = "text-5xl mb-2 status-on pulse-blue";
-                        txt.innerText = `PROTEGIDO (${data.perfil.QTD_DISPOSITIVOS} DEVICES)`;
-                        txt.className = "text-[10px] font-bold uppercase tracking-widest status-on";
-                    }
-
-                    // Exibição de Serviço Ativo
-                    document.getElementById('servicoTxt').innerText = "SEGURANÇA GERENCIADA ASYNCX";
-
-                    // LISTA DE DOCUMENTOS (Atenção aos nomes das colunas: URL_PDF e NOME_EXIBICAO)
-                    const list = document.getElementById('docsList');
-                    list.innerHTML = ''; 
-
-                    if (data.documentos && data.documentos.length > 0) {
-                        data.documentos.forEach(doc => {
-                            const btn = document.createElement('a');
-                            btn.href = doc.URL_PDF; // Nome real na sua imagem do banco
-                            btn.target = "_blank";
-                            btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-800 border border-gray-100 hover:bg-white hover:border-blue-600 transition mb-2";
-                            btn.innerText = `📄 ${doc.NOME_EXIBICAO}`; // Nome real na sua imagem do banco
-                            list.appendChild(btn);
-                        });
-                    } else {
-                        list.innerHTML = '<p class="text-[10px] text-gray-400 text-center uppercase">Nenhum laudo disponível</p>';
-                    }
-
-                    // LISTA FINANCEIRA (Atenção: LINK_BOLETO e STATUS_PAGO)
-                    if (data.financeiro && data.financeiro.length > 0) {
-                        data.financeiro.forEach(bill => {
-                            const btn = document.createElement('a');
-                            btn.href = bill.LINK_BOLETO; // Nome real na sua imagem do banco
-                            btn.target = "_blank";
-                            btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-black text-white hover:bg-gray-800 transition mb-2";
-                            btn.innerText = `💰 ${bill.DESCRICAO} (${bill.STATUS_PAGO})`; // Nome real na sua imagem do banco
-                            list.appendChild(btn);
-                        });
-                    }
-                }
-            } catch (err) { 
-                console.error("Erro ao processar dados do Oracle:", err); 
-            }
-            window.scrollTo(0,0);
+        // 2. Tenta pegar o e-mail (essencial para a busca)
+        const userEmail = userBasicData.email || document.getElementById('email').value;
+        
+        // Feedback imediato com o que já temos do login
+        if (userBasicData.nome) {
+            document.getElementById('clienteNome').innerText = userBasicData.nome.toUpperCase();
         }
+
+        try {
+            console.log("Solicitando dados detalhados para:", userEmail);
+            const response = await fetch(`${API_URL}/user/dashboard-data/${userEmail}`);
+            const data = await response.json();
+
+            if (data.success) {
+                // Atualiza com o nome oficial do banco
+                document.getElementById('clienteNome').innerText = data.perfil.NOME_EXIBICAO.toUpperCase();
+                
+                // Status e Dispositivos
+                const led = document.getElementById('statusLed');
+                const txt = document.getElementById('statusTxt');
+                const servico = document.getElementById('servicoTxt');
+
+                servico.innerText = "Segurança Gerenciada ASYNCX";
+
+                if (data.perfil.STATUS_MONITORAMENTO === 'ATIVO') {
+                    led.className = "text-5xl mb-2 status-on pulse-blue";
+                    txt.innerText = `PROTEGIDO (${data.perfil.QTD_DISPOSITIVOS} DEVICES)`;
+                    txt.className = "text-[10px] font-bold uppercase tracking-widest status-on";
+                }
+
+                // LISTAGEM DE DOCUMENTOS (Sincronizado com sua imagem de banco)
+                const list = document.getElementById('docsList');
+                list.innerHTML = ''; 
+
+                // Documentos Técnicos: NOME_EXIBICAO e URL_PDF
+                if (data.documentos && data.documentos.length > 0) {
+                    data.documentos.forEach(doc => {
+                        const btn = document.createElement('a');
+                        btn.href = doc.URL_PDF; // Conforme sua imagem
+                        btn.target = "_blank";
+                        btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-800 border border-gray-100 hover:bg-white hover:border-blue-600 transition mb-2";
+                        btn.innerText = `📄 ${doc.NOME_EXIBICAO}`; // Conforme sua imagem
+                        list.appendChild(btn);
+                    });
+                }
+
+                // Faturas: DESCRICAO e LINK_BOLETO
+                if (data.financeiro && data.financeiro.length > 0) {
+                    data.financeiro.forEach(bill => {
+                        const btn = document.createElement('a');
+                        btn.href = bill.LINK_BOLETO; // Conforme sua imagem
+                        btn.target = "_blank";
+                        btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-black text-white hover:bg-gray-800 transition mb-2 shadow-lg";
+                        btn.innerText = `💰 ${bill.DESCRICAO} (${bill.STATUS_PAGO})`; // Conforme sua imagem
+                        list.appendChild(btn);
+                    });
+                }
+                
+                if (list.innerHTML === '') {
+                    list.innerHTML = '<p class="text-[10px] text-gray-400 uppercase text-center py-4">Nenhum laudo disponível</p>';
+                }
+
+            } else {
+                console.error("Servidor retornou erro:", data.message);
+            }
+        } catch (err) { 
+            console.error("Erro técnico na chamada do Dashboard:", err);
+        }
+        window.scrollTo(0,0);
+    }
     </script>
 </body>
 </html>
