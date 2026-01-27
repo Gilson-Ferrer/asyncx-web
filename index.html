@@ -319,7 +319,7 @@
         </div>
     </div>
 <script>
-   // FORMULÁRIO DE CONTATO (FOCO: TELEGRAM & FEEDBACK HTML)
+// FORMULÁRIO DE CONTATO (FOCO: TELEGRAM & FEEDBACK PROFISSIONAL)
     document.getElementById('formContato').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -328,24 +328,27 @@
         const emailValue = emailInput.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Função interna para exibir a mensagem bonita
+        // Função interna para exibir a mensagem executiva
         const mostrarMensagem = (texto, erro = false) => {
             feedback.innerText = texto;
-            feedback.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+            
+            // Reset de classes para garantir consistência visual
+            feedback.className = "mb-6 p-4 rounded-xl text-center font-bold text-xs uppercase tracking-widest transition-all duration-500 border";
             
             if (erro) {
-                feedback.classList.add('bg-red-50', 'text-red-600', 'border', 'border-red-100');
+                // Alerta de Erro (Vermelho)
+                feedback.classList.add('bg-red-50', 'text-red-600', 'border-red-100');
             } else {
-                feedback.classList.add('bg-blue-50', 'text-blue-600', 'border', 'border-blue-100');
+                // Alerta de Sucesso Profissional (Azul ASYNCX)
+                feedback.classList.add('bg-blue-50', 'text-blue-600', 'border-blue-100');
             }
             
             feedback.classList.remove('hidden');
-            // Rola suavemente até a mensagem
             feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
         };
 
         if (!emailRegex.test(emailValue)) {
-            mostrarMensagem('Por favor, insira um e-mail válido.', true);
+            mostrarMensagem('Por favor, insira um endereço de e-mail válido.', true);
             emailInput.focus();
             return;
         }
@@ -354,7 +357,7 @@
         const originalText = btn.innerHTML;
         
         btn.disabled = true;
-        btn.innerHTML = '<span class="animate-pulse text-[10px]">ENVIANDO SUA MENSAGEM...</span>';
+        btn.innerHTML = '<span class="animate-pulse text-[10px]">TRANSMITINDO SOLICITAÇÃO...</span>';
 
         const payload = {
             nome: document.getElementById('nome').value,
@@ -371,16 +374,16 @@
             });
 
             if (response.ok) {
-                mostrarMensagem('Protocolo enviado com sucesso! Aguarde nosso contato.');
+                // Redação Profissional Atualizada
+                mostrarMensagem('Solicitação enviada com sucesso. Nossa central de inteligência entrará em contato em breve.');
                 e.target.reset();
-                // Opcional: Esconde a mensagem após 8 segundos
-                setTimeout(() => feedback.classList.add('hidden'), 8000);
+                setTimeout(() => feedback.classList.add('hidden'), 10000);
             } else { 
-                mostrarMensagem('Erro na central. Tente o botão de WhatsApp abaixo.', true);
+                mostrarMensagem('Falha na comunicação com a central. Por favor, utilize o suporte direto via WhatsApp.', true);
             }
         } catch (err) {
-            console.error("Erro:", err);
-            mostrarMensagem('Falha de conexão. Tente novamente em instantes.', true);
+            console.error("Erro técnico:", err);
+            mostrarMensagem('Instabilidade de conexão detectada. Tente novamente em alguns instantes.', true);
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalText;
