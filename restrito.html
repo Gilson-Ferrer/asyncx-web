@@ -141,7 +141,18 @@
 
     <script>
         const API_URL = 'https://asyncx-backend.onrender.com/api';
+        // Função central para validar força da senha
+        function validarForcaSenha(senha) {
+            const minComprimento = senha.length >= 8;
+            const temMaiuscula = /[A-Z]/.test(senha);
+            const temEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
 
+            if (!minComprimento) return "A senha deve ter no mínimo 8 caracteres.";
+            if (!temMaiuscula) return "A senha deve conter ao menos uma letra maiúscula.";
+            if (!temEspecial) return "A senha deve conter ao menos um caractere especial.";
+            
+            return null; // Senha válida
+        }
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const setupToken = urlParams.get('setup');
@@ -172,7 +183,19 @@
             const token = urlParams.get('setup');
             const senha = document.getElementById('setupSenha').value;
             const mfaToken = document.getElementById('setupMfa').value;
-            if (!senha || mfaToken.length < 6) return alert("Preencha todos os campos.");
+            const btn = document.getElementById('btnFinalizar');
+
+            // Validação de preenchimento básico
+            if (!senha || !mfaToken) return alert("Preencha a senha e o código MFA.");
+
+            // Aplicação da Política de Segurança
+            const erroSenha = validarForcaSenha(senha);
+            if (erroSenha) return alert(erroSenha);
+
+            if (mfaToken.length < 6) return alert("O código MFA deve ter 6 dígitos.");
+
+            btn.disabled = true;
+            btn.innerText = "ATIVANDO CONTA...";
 
             try {
                 const res = await fetch(`${API_URL}/auth/setup-finalize`, {
@@ -181,9 +204,19 @@
                     body: JSON.stringify({ token, senha, mfaToken })
                 });
                 const data = await res.json();
-                if (data.success) { alert("Sucesso! Faça login."); window.location.href = 'restrito.html'; }
-                else alert(data.message);
-            } catch (err) { alert("Erro na ativação."); }
+
+                if (data.success) {
+                    alert("Segurança ativada com sucesso! Você já pode acessar o portal.");
+                    window.location.href = 'restrito.html';
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert("Erro na ativação. Verifique sua conexão.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Finalizar Ativação";
+            }
         }
 
         async function fazerLogin() {
@@ -318,9 +351,11 @@
 
         async function atualizarSenha() {
             const novaSenha = document.getElementById('novaSenha').value;
-            const email = document.getElementById('email').value; // Pega o e-mail do login
+            const email = document.getElementById('email').value; // Recupera do login anterior
 
-            if (!novaSenha || novaSenha.length < 6) return alert("Digite uma senha com ao menos 6 caracteres.");
+            // Aplicação da Política de Segurança
+            const erroSenha = validarForcaSenha(novaSenha);
+            if (erroSenha) return alert(erroSenha);
 
             try {
                 const res = await fetch(`${API_URL}/user/change-password`, {
@@ -329,9 +364,12 @@
                     body: JSON.stringify({ email, novaSenha })
                 });
                 const data = await res.json();
+                
                 if (data.success) {
-                    alert("Senha atualizada! Use a nova senha no próximo acesso.");
-                    document.getElementById('novaSenha').value = '';
+                    alert("Senha atualizada com sucesso! Use-a em seu próximo acesso.");
+                    document.getElementById('novaSenha').value = ''; // Limpa o campo
+                } else {
+                    alert(data.message || "Erro ao atualizar senha.");
                 }
             } catch (e) {
                 alert("Erro ao conectar com o servidor de segurança.");
