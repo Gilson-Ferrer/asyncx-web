@@ -69,33 +69,66 @@
             </div>
         </div>
     </main>
+<main id="dashboardSection" class="hidden max-w-7xl mx-auto px-6 py-16 w-full fade-in">
+    <div class="mb-12 text-center md:text-left">
+        <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block">Relatório em Tempo Real</span>
+        <h2 id="clienteNome" class="text-2xl md:text-4xl font-medium tracking-tight text-gray-800 uppercase">---</h2>
+        <div class="h-1 bg-blue-600 w-16 mt-4 mx-auto md:mx-0"></div>
+    </div>
 
-    <main id="dashboardSection" class="hidden max-w-7xl mx-auto px-6 py-16 w-full fade-in">
-        <div class="mb-12 text-center md:text-left">
-            <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block">Relatório em Tempo Real</span>
-            <h2 id="clienteNome" class="text-2xl md:text-4xl font-medium tracking-tight text-gray-800 uppercase">---</h2>
-            <div class="h-1 bg-blue-600 w-16 mt-4 mx-auto md:mx-0"></div>
-        </div>
+    <div class="flex gap-4 mb-10 border-b border-gray-100 overflow-x-auto pb-2 no-scrollbar">
+        <button onclick="switchTab('tab-docs')" class="tab-btn border-b-2 border-blue-600 text-blue-600 text-[10px] font-black uppercase tracking-widest px-4 py-2 transition-all">Documentos</button>
+        <button onclick="switchTab('tab-finance')" class="tab-btn border-b-2 border-transparent text-gray-400 text-[10px] font-black uppercase tracking-widest px-4 py-2 transition-all hover:text-blue-600">Faturamento</button>
+        <button onclick="switchTab('tab-perfil')" class="tab-btn border-b-2 border-transparent text-gray-400 text-[10px] font-black uppercase tracking-widest px-4 py-2 transition-all hover:text-blue-600">Dados Pessoais</button>
+    </div>
 
+    <div id="tab-docs" class="tab-content fade-in">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             <div class="glass p-10 rounded-[40px] premium-shadow text-center flex flex-col items-center justify-center">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6">Sincronização</p>
                 <div id="statusLed" class="text-5xl mb-2">●</div>
                 <h3 id="statusTxt" class="text-[10px] font-bold uppercase tracking-widest">---</h3>
             </div>
-
             <div class="glass p-10 rounded-[40px] premium-shadow flex flex-col justify-center">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6">Serviço Ativo</p>
                 <h3 id="servicoTxt" class="text-xl font-bold italic tracking-tighter text-gray-900">---</h3>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-widest mt-2 italic">Certificado pela ASYNCX</p>
             </div>
-
             <div class="glass p-10 rounded-[40px] premium-shadow flex flex-col justify-center">
-                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Documentação & Financeiro</p>
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Laudos & Relatórios</p>
                 <div id="docsList" class="space-y-3"></div>
             </div>
         </div>
-    </main>
+    </div> <div id="tab-finance" class="tab-content hidden fade-in">
+        <div class="glass p-10 rounded-[40px] premium-shadow">
+            <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-8 text-center">Histórico Financeiro & Pagamentos</p>
+            <div id="financeList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+    </div>
+
+    <div id="tab-perfil" class="tab-content hidden fade-in">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-10 rounded-[40px] premium-shadow">
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6">Informações Cadastrais</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-[8px] font-black text-blue-600 uppercase">Documento</label>
+                        <p id="perfilDoc" class="text-sm font-bold text-gray-800 uppercase italic">---</p>
+                    </div>
+                    <div>
+                        <label class="text-[8px] font-black text-blue-600 uppercase">Endereço</label>
+                        <p id="perfilEnd" class="text-sm font-bold text-gray-800 uppercase italic">---</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass p-10 rounded-[40px] premium-shadow">
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Segurança da Conta</p>
+                <input type="password" id="novaSenha" placeholder="Nova Senha" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition mb-4 text-xs">
+                <button onclick="atualizarSenha()" class="w-full bg-black text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg">Atualizar Senha</button>
+            </div>
+        </div>
+    </div>
+</main>
 
     <footer class="bg-white border-t border-gray-100 pt-20 pb-10 mt-auto">
         <div class="max-w-7xl mx-auto px-6">
@@ -259,6 +292,46 @@
                 console.error("Erro técnico na chamada do Dashboard:", err);
             }
             window.scrollTo(0,0);
+        }
+
+        function switchTab(tabId) {
+            // Esconde todos os conteúdos
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+            
+            // Mostra o conteúdo selecionado
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Estiliza os botões (remove o azul do anterior e coloca no atual)
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-600', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-400');
+            });
+
+            // Destaca o botão clicado (quem chamou a função)
+            event.currentTarget.classList.remove('border-transparent', 'text-gray-400');
+            event.currentTarget.classList.add('border-blue-600', 'text-blue-600');
+        }
+
+        async function atualizarSenha() {
+            const novaSenha = document.getElementById('novaSenha').value;
+            const email = document.getElementById('email').value; // Pega o e-mail do login
+
+            if (!novaSenha || novaSenha.length < 6) return alert("Digite uma senha com ao menos 6 caracteres.");
+
+            try {
+                const res = await fetch(`${API_URL}/user/change-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, novaSenha })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert("Senha atualizada! Use a nova senha no próximo acesso.");
+                    document.getElementById('novaSenha').value = '';
+                }
+            } catch (e) {
+                alert("Erro ao conectar com o servidor de segurança.");
+            }
         }
     </script>
 </body>
