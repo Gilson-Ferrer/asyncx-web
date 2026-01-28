@@ -24,31 +24,48 @@
     <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-24">
         <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
             <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-12 md:h-14 w-auto"></a> 
-            <button onclick="location.href='restrito.html'" id="btnSair" onclick="sair()" class="hidden bg-black text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">
+            <button id="btnSair" onclick="sair()" class="hidden bg-black text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">
                 Sair
             </button>
         </div>
     </nav>
-
-    <main id="loginSection" class="flex-grow flex items-center justify-center px-6 py-12 fade-in bg-gray-100">
-        <div class="w-full max-w-sm">
-            <div class="text-center mb-10">
-                <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Acesso Restrito</span>
-                <h2 class="text-4xl font-black tracking-tighter leading-tight">Painel de <br>Segurança</h2>
-            </div>
+<main id="loginSection" class="flex-grow flex items-center justify-center px-6 py-12 fade-in bg-gray-100">
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-10">
+            <span id="labelAcesso" class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Acesso Restrito</span>
+            <h2 id="tituloAcesso" class="text-4xl font-black tracking-tighter leading-tight">Painel de <br>Segurança</h2>
+        </div>
+        
+        <div id="loginFields" class="space-y-4">
+            <input type="email" id="email" placeholder="E-mail" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 uppercase text-[10px] font-bold">
+            <input type="password" id="senha" placeholder="Sua Senha" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100">
+            <input type="text" id="mfaTokenLogin" placeholder="Código Authenticator" maxlength="6" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 text-center font-bold tracking-[0.5em]">
             
-            <div class="space-y-4">
-                <input type="email" id="email" placeholder="E-mail" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100">
-                <input type="password" id="senha" placeholder="Sua Senha" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100">
-                <input type="text" id="mfaTokenLogin" placeholder="Código Authenticator (6 dígitos)" maxlength="6" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100">
-                
-                <button onclick="fazerLogin()" id="btnLogin" class="w-full bg-blue-600 text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-xl shadow-blue-100">
-                    Entrar
-                </button>
+            <button onclick="fazerLogin()" id="btnLogin" class="w-full bg-blue-600 text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-xl shadow-blue-100">
+                Entrar
+            </button>
+
+            <div class="text-center mt-6">
+                <a href="javascript:void(0)" onclick="toggleEsqueciSenha(true)" class="text-[10px] text-gray-400 uppercase font-bold hover:text-blue-600 transition">Esqueci minha senha</a>
             </div>
         </div>
-    </main>
 
+        <div id="forgotSection" class="hidden space-y-4 fade-in">
+            <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm">
+                <p class="text-[10px] font-black uppercase tracking-widest text-center text-gray-400 mb-4">Redefinição de Acesso</p>
+                <input type="email" id="emailForgot" placeholder="DIGITE SEU E-MAIL CADASTRADO" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 uppercase text-[10px] font-bold">
+                
+                <button id="btnForgot" onclick="solicitarReset()" class="w-full bg-black text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg mt-4">
+                    Enviar Link de Recuperação
+                </button>
+            </div>
+            
+            <button onclick="toggleEsqueciSenha(false)" class="w-full text-[10px] text-gray-400 uppercase font-bold py-2 hover:text-black transition">
+                ← Voltar para o Login
+            </button>
+        </div>
+    </div>
+</main>
     <main id="setupSection" class="hidden flex-grow flex items-center justify-center px-6 py-12 fade-in bg-white">
         <div class="w-full max-w-md text-center">
             <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block italic">Ativação de Segurança</span>
@@ -404,6 +421,57 @@
             sessionStorage.clear();
             alert("Sessão encerrada.");
             window.location.href = 'restrito.html';
+        }
+
+       function toggleEsqueciSenha(mostrar) {
+            const loginFields = document.getElementById('loginFields');
+            const forgotSection = document.getElementById('forgotSection');
+            const titulo = document.getElementById('tituloAcesso');
+            const label = document.getElementById('labelAcesso');
+            
+            if(mostrar) {
+                loginFields.classList.add('hidden');
+                forgotSection.classList.remove('hidden');
+                titulo.innerHTML = "Recuperar <br>Minha Senha";
+                label.innerText = "Segurança ASYNCX";
+            } else {
+                loginFields.classList.remove('hidden');
+                forgotSection.classList.add('hidden');
+                titulo.innerHTML = "Painel de <br>Segurança";
+                label.innerText = "Acesso Restrito";
+            }
+        }
+
+        // Função para disparar o e-mail de recuperação
+        async function solicitarReset() {
+            const email = document.getElementById('emailForgot').value;
+            const btn = document.getElementById('btnForgot');
+
+            if(!email) return alert("Informe seu e-mail.");
+
+            btn.disabled = true;
+            btn.innerText = "PROCESSANDO...";
+
+            try {
+                const response = await fetch(`${API_URL}/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert("Sucesso! Se o e-mail estiver correto, você receberá as instruções em instantes.");
+                    toggleEsqueciSenha(false);
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                alert("Erro ao conectar com o servidor ASYNCX.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Enviar Link";
+            }
         }
 
     </script>
