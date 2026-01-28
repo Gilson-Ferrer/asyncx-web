@@ -38,7 +38,17 @@
         
         <div id="loginFields" class="space-y-4">
             <input type="email" id="email" placeholder="E-mail" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 uppercase text-[10px] font-bold">
-            <input type="password" id="senha" placeholder="Sua Senha" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100">
+            
+            <div class="relative">
+                <input type="password" id="senha" placeholder="Sua Senha" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 pr-14">
+                <button type="button" onclick="toggleView('senha')" class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors">
+                    <svg id="eye-icon-senha" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 8.049 7.21 5 12 5c4.789 0 8.601 3.049 9.964 6.678a1.012 1.012 0 010 .644C20.6 15.951 16.79 19 12 19c-4.789 0-8.601-3.049-9.964-6.678z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+            </div>
+
             <input type="text" id="mfaTokenLogin" placeholder="Código Authenticator" maxlength="6" class="w-full p-5 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 text-center font-bold tracking-[0.5em]">
             
             <button onclick="fazerLogin()" id="btnLogin" class="w-full bg-blue-600 text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-xl shadow-blue-100">
@@ -66,26 +76,63 @@
         </div>
     </div>
 </main>
-    <main id="setupSection" class="hidden flex-grow flex items-center justify-center px-6 py-12 fade-in bg-white">
-        <div class="w-full max-w-md text-center">
-            <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block italic">Ativação de Segurança</span>
-            <h2 id="setupNome" class="text-3xl font-black tracking-tighter mb-8 uppercase text-gray-800">Carregando...</h2>
+<main id="setupSection" class="hidden flex-grow flex items-center justify-center px-6 py-12 fade-in bg-white">
+    <div class="w-full max-w-md text-center">
+        <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block italic">Segurança ASYNCX</span>
+        <h2 id="setupNome" class="text-3xl font-black tracking-tighter mb-8 uppercase text-gray-800">Carregando...</h2>
+        
+        <div class="glass p-8 rounded-[40px] premium-shadow border-blue-100 border flex flex-col items-center">
             
-            <div class="glass p-8 rounded-[40px] premium-shadow border-blue-100 border flex flex-col items-center">
-                <p class="text-xs text-gray-500 mb-6 font-medium">Escaneie o QR Code no seu <br><strong class="text-black">Google Authenticator</strong></p>
+            <div id="mfaContainer" class="w-full flex flex-col items-center">
+                <p class="text-[10px] text-gray-400 mb-6 font-black uppercase tracking-widest">Vincular Authenticator</p>
+                
                 <div class="bg-white p-4 rounded-3xl border border-gray-100 mb-6 shadow-inner">
                     <img id="qrCodeImg" src="" alt="MFA QR Code" class="w-48 h-48">
                 </div>
-                <div class="w-full space-y-4 text-left">
-                    <input type="password" id="setupSenha" placeholder="Crie uma Senha Forte" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100">
-                    <input type="text" id="setupMfa" placeholder="Digite o Código do App" maxlength="6" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 text-center text-xl font-bold tracking-widest">
+
+                <div class="flex gap-4 mb-8">
+                    <a href="https://apps.apple.com/br/app/google-authenticator/id388497605" target="_blank" class="opacity-50 hover:opacity-100 transition">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" class="h-8">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank" class="opacity-50 hover:opacity-100 transition">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" class="h-8">
+                    </a>
                 </div>
-                <button onclick="finalizarSetup()" id="btnFinalizar" class="w-full bg-black text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-xl mt-8">
-                    Finalizar Ativação
-                </button>
+
+                <p class="text-[10px] text-gray-400 mb-4 font-bold uppercase">Digite o código de 6 dígitos gerado:</p>
+                <input type="text" id="setupMfa" placeholder="000 000" maxlength="6" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 text-center text-xl font-bold tracking-[0.5em] mb-8">
             </div>
+
+            <div class="w-full space-y-4 text-left">
+                <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest text-center mb-2">Definir Nova Senha</p>
+                
+                <div class="relative">
+                    <input type="password" id="setupSenha" placeholder="Nova Senha" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 pr-12">
+                    <button type="button" onclick="toggleView('setupSenha')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 8.049 7.21 5 12 5c4.789 0 8.601 3.049 9.964 6.678a1.012 1.012 0 010 .644C20.6 15.951 16.79 19 12 19c-4.789 0-8.601-3.049-9.964-6.678z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="relative">
+                    <input type="password" id="setupSenhaConfirm" placeholder="Confirme a Senha" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 pr-12">
+                    <button type="button" onclick="toggleView('setupSenhaConfirm')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 8.049 7.21 5 12 5c4.789 0 8.601 3.049 9.964 6.678a1.012 1.012 0 010 .644C20.6 15.951 16.79 19 12 19c-4.789 0-8.601-3.049-9.964-6.678z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="finalizarSetup()" id="btnFinalizar" class="w-full bg-black text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-xl mt-8">
+                Finalizar Ativação
+            </button>
         </div>
-    </main>
+    </div>
+</main>
 <main id="dashboardSection" class="hidden max-w-7xl mx-auto px-6 py-16 w-full fade-in">
     <div class="mb-12 text-center md:text-left">
         <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block">Relatório em Tempo Real</span>
@@ -140,8 +187,29 @@
             </div>
             <div class="glass p-10 rounded-[40px] premium-shadow">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Segurança da Conta</p>
-                <input type="password" id="novaSenha" placeholder="Nova Senha" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition mb-4 text-xs">
+                
+                <div class="relative mb-4">
+                    <input type="password" id="novaSenha" placeholder="Nova Senha" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition text-xs pr-12">
+                    <button type="button" onclick="toggleView('novaSenha')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 8.049 7.21 5 12 5c4.789 0 8.601 3.049 9.964 6.678a1.012 1.012 0 010 .644C20.6 15.951 16.79 19 12 19c-4.789 0-8.601-3.049-9.964-6.678z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="relative mb-4">
+                    <input type="password" id="confirmarNovaSenha" placeholder="Confirmar Nova Senha" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition text-xs pr-12">
+                    <button type="button" onclick="toggleView('confirmarNovaSenha')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 8.049 7.21 5 12 5c4.789 0 8.601 3.049 9.964 6.678a1.012 1.012 0 010 .644C20.6 15.951 16.79 19 12 19c-4.789 0-8.601-3.049-9.964-6.678z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                </div>
+
                 <input type="text" id="mfaAtualizarSenha" placeholder="CÓDIGO AUTHENTICATOR" maxlength="6" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition mb-4 text-center font-bold tracking-widest text-xs">
+                
                 <button onclick="atualizarSenha()" class="w-full bg-black text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg">Atualizar Senha</button>
             </div>
         </div>
@@ -163,7 +231,7 @@
         function validarForcaSenha(senha) {
             const minComprimento = senha.length >= 8;
             const temMaiuscula = /[A-Z]/.test(senha);
-            const temEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
+            const temEspecial = /[!@#$%^&*(),.?":{}|\/|<>]/.test(senha);
 
             if (!minComprimento) return "A senha deve ter no mínimo 8 caracteres.";
             if (!temMaiuscula) return "A senha deve conter ao menos uma letra maiúscula.";
@@ -171,6 +239,7 @@
             
             return null; // Senha válida
         }
+
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const setupToken = urlParams.get('setup');
@@ -197,15 +266,33 @@
             }
         }
 
+        let globalNeedsMFA = false;
+
         async function carregarSetup(token) {
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('setupSection').classList.remove('hidden');
             try {
                 const res = await fetch(`${API_URL}/auth/setup-check/${token}`);
                 const data = await res.json();
+                
                 if (data.success) {
-                    document.getElementById('setupNome').innerText = `Olá, ${data.nome.split(' ')[0]}`;
-                    document.getElementById('qrCodeImg').src = data.qrCode;
+                    globalNeedsMFA = data.needsMFA; // Backend informa se precisa de QR Code
+                    
+                    document.getElementById('setupNome').innerText = globalNeedsMFA 
+                        ? `Olá, ${data.nome.split(' ')[0]}` 
+                        : `Recuperação: ${data.nome.split(' ')[0]}`;
+
+                    const mfaContainer = document.getElementById('mfaContainer');
+                    
+                    if (!globalNeedsMFA) {
+                        // Se for reset, esconde QR Code e Links das Lojas
+                        if (mfaContainer) mfaContainer.classList.add('hidden');
+                        document.getElementById('btnFinalizar').innerText = "ATUALIZAR SENHA";
+                    } else {
+                        // Se for primeiro acesso, mostra tudo
+                        if (mfaContainer) mfaContainer.classList.remove('hidden');
+                        document.getElementById('qrCodeImg').src = data.qrCode;
+                    }
                 } else {
                     alert(data.message || "Link expirado.");
                     window.location.href = 'restrito.html';
@@ -217,40 +304,52 @@
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('setup');
             const senha = document.getElementById('setupSenha').value;
+            const confirma = document.getElementById('setupSenhaConfirm').value;
             const mfaToken = document.getElementById('setupMfa').value;
             const btn = document.getElementById('btnFinalizar');
 
-            // Validação de preenchimento básico
-            if (!senha || !mfaToken) return alert("Preencha a senha e o código MFA.");
+            // 1. Validação de igualdade de senhas
+            if (senha !== confirma) return alert("As senhas digitadas não coincidem.");
+            
+            // 2. Validação de preenchimento (MFA só obrigatório se globalNeedsMFA for true)
+            if (!senha || (globalNeedsMFA && !mfaToken)) {
+                return alert("Preencha todos os campos de segurança obrigatórios.");
+            }
 
-            // Aplicação da Política de Segurança
+            // 3. Validação de força (Agora aceitando /)
             const erroSenha = validarForcaSenha(senha);
             if (erroSenha) return alert(erroSenha);
 
-            if (mfaToken.length < 6) return alert("O código MFA deve ter 6 dígitos.");
-
             btn.disabled = true;
-            btn.innerText = "ATIVANDO CONTA...";
+            btn.innerText = "PROCESSANDO...";
+
+            // 4. LÓGICA DE DESVIO DE ROTA
+            // Se for primeiro acesso -> setup-finalize (payload: senha)
+            // Se for recuperação -> complete-reset (payload: password)
+            const endpoint = globalNeedsMFA ? '/auth/setup-finalize' : '/auth/complete-reset';
+            const payload = globalNeedsMFA 
+                ? { token, senha, mfaToken } 
+                : { token, password: senha };
 
             try {
-                const res = await fetch(`${API_URL}/auth/setup-finalize`, {
+                const res = await fetch(`${API_URL}${endpoint}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token, senha, mfaToken })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
 
                 if (data.success) {
-                    alert("Segurança ativada com sucesso! Você já pode acessar o portal.");
+                    alert(data.message || "Protocolo concluído com sucesso!");
                     window.location.href = 'restrito.html';
                 } else {
                     alert(data.message);
                 }
             } catch (err) {
-                alert("Erro na ativação. Verifique sua conexão.");
+                alert("Erro na ativação. Verifique sua conexão com a rede ASYNCX.");
             } finally {
                 btn.disabled = false;
-                btn.innerText = "Finalizar Ativação";
+                btn.innerText = globalNeedsMFA ? "Finalizar Ativação" : "ATUALIZAR SENHA";
             }
         }
 
@@ -412,11 +511,15 @@
             event.currentTarget.classList.add('border-blue-600', 'text-blue-600');
         }
 
-        async function atualizarSenha() {
+       async function atualizarSenha() {
             const novaSenha = document.getElementById('novaSenha').value;
-            const mfaToken = document.getElementById('mfaAtualizarSenha').value; // Captura o MFA
+            const confirma = document.getElementById('confirmarNovaSenha').value;
+            const mfaToken = document.getElementById('mfaAtualizarSenha').value;
             const token = sessionStorage.getItem('asyncx_token');
 
+            // Validação de confirmação
+            if (novaSenha !== confirma) return alert("A confirmação da nova senha não coincide.");
+            
             const erroSenha = validarForcaSenha(novaSenha);
             if (erroSenha) return alert(erroSenha);
             if (!mfaToken) return alert("Digite o código MFA para confirmar.");
@@ -428,13 +531,14 @@
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}` 
                     },
-                    body: JSON.stringify({ novaSenha, mfaToken }) // Envia ambos
+                    body: JSON.stringify({ novaSenha, mfaToken })
                 });
                 const data = await res.json();
                 
                 if (data.success) {
                     alert("Senha atualizada com sucesso!");
                     document.getElementById('novaSenha').value = '';
+                    document.getElementById('confirmarNovaSenha').value = '';
                     document.getElementById('mfaAtualizarSenha').value = '';
                 } else {
                     alert(data.message);
@@ -505,6 +609,11 @@
                 btn.disabled = false;
                 btn.innerText = "Enviar Link de Recuperação"; // Texto original exato
             }
+        }
+
+        function toggleView(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === "password" ? "text" : "password";
         }
 
     </script>
