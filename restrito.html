@@ -173,10 +173,27 @@
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const setupToken = urlParams.get('setup');
-            if (setupToken) carregarSetup(setupToken);
+            
+            // 1. Prioridade: Se for um link de primeiro acesso/reset
+            if (setupToken) {
+                carregarSetup(setupToken);
+                return; // Para aqui para não tentar carregar dashboard
+            }
 
+            // 2. Verificação de Sessão: Se já existe um token salvo
+            const tokenSalvo = sessionStorage.getItem('asyncx_token');
+            if (tokenSalvo) {
+                // Se tem token, tenta carregar o dashboard direto
+                // Passamos um objeto vazio ou com nome básico, pois o dashboard vai buscar os dados reais com o token
+                carregarDashboard({ nome: "Carregando..." });
+            }
+
+            // 3. Banner de Cookies
             const consent = localStorage.getItem('asyncx_privacy_consent');
-            if (!consent) document.getElementById('cookieBanner').classList.remove('hidden');
+            if (!consent) {
+                const banner = document.getElementById('cookieBanner');
+                if (banner) banner.classList.remove('hidden');
+            }
         }
 
         async function carregarSetup(token) {
