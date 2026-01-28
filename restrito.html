@@ -24,7 +24,7 @@
     <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-24">
         <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
             <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-12 md:h-14 w-auto"></a> 
-            <button onclick="location.href='restrito.html'" id="btnSair" class="hidden bg-black text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">
+            <button onclick="location.href='restrito.html'" id="btnSair" onclick="sair()" class="hidden bg-black text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">
                 Sair
             </button>
         </div>
@@ -237,11 +237,22 @@
                     body: JSON.stringify({ email, senha, mfaToken })
                 });
                 const result = await response.json();
-                // AQUI PASSA O E-MAIL PARA CARREGAR O DASHBOARD REAL
-                if (response.ok) carregarDashboard({ ...result.data, email: email });
-                else alert(result.message);
-            } catch (err) { alert("Erro de conexão."); }
-            finally { btn.disabled = false; btn.innerText = "Entrar"; }
+
+                if (response.ok) {
+                    // SALVA O TOKEN PARA REQUISIÇÕES FUTURAS
+                    sessionStorage.setItem('asyncx_token', result.token); 
+                    
+                    // Agora chamamos o dashboard sem precisar passar o email na mão
+                    carregarDashboard(result.data);
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) { 
+                alert("Erro de conexão."); 
+            } finally { 
+                btn.disabled = false; 
+                btn.innerText = "Entrar"; 
+            }
         }
         async function carregarDashboard(userBasicData) {
             // 1. Setup inicial de visibilidade
@@ -250,15 +261,24 @@
             document.getElementById('dashboardSection').classList.remove('hidden');
             document.getElementById('btnSair').classList.remove('hidden');
 
-            // 2. Captura o e-mail
-            const userEmail = userBasicData.email || document.getElementById('email').value;
-            
+            // 2. Feedback imediato com o nome do login (se disponível)
             if (userBasicData.nome) {
                 document.getElementById('clienteNome').innerText = userBasicData.nome.toUpperCase();
             }
 
+            // Recupera o Token JWT do sessionStorage para autenticar a requisição
+            const token = sessionStorage.getItem('asyncx_token');
+
             try {
-                const response = await fetch(`${API_URL}/user/dashboard-data/${userEmail}`);
+                // REQUISIÇÃO PROTEGIDA: A URL agora é genérica, o servidor identifica o usuário pelo Token
+                const response = await fetch(`${API_URL}/user/dashboard-data`, {
+                    method: 'GET',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
                 const data = await response.json();
 
                 if (data.success) {
@@ -274,7 +294,7 @@
                     const txt = document.getElementById('statusTxt');
                     document.getElementById('servicoTxt').innerText = "Segurança Gerenciada ASYNCX";
 
-                    if (p.STATUS_MONITORAMENTO === 'ATIVO') {
+                    if (p.STATUS_MONITORAMENTO === 'ATIVO' || p.STATUS_MONITORAMENTO === 'PENDENTE') {
                         led.className = "text-5xl mb-2 status-on pulse-blue";
                         txt.innerText = `PROTEGIDO (${p.QTD_DISPOSITIVOS} DEVICES)`;
                         txt.className = "text-[10px] font-bold uppercase tracking-widest status-on";
@@ -312,7 +332,7 @@
                                     <p class="text-[10px] font-black uppercase">R$ ${bill.VALOR}</p>
                                     <p class="text-[8px] text-gray-400 uppercase font-bold">Venc: ${dataVenc} - ${faturaId}</p>
                                 </div>
-                                <a href="${bill.LINK_BOLETO || '#'}" target="_blank" class="bg-black text-white px-4 py-2 rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-blue-600 transition">
+                                <a href="${bill.LINK_BOLETO || '#'}" target="_blank" class="bg-black text-white px-4 py-2 rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg">
                                     ${bill.STATUS_PAGO === 'PAGO' ? 'RECIBO' : 'PAGAR'}
                                 </a>
                             `;
@@ -324,6 +344,10 @@
 
                 } else {
                     console.error("Erro no retorno dos dados:", data.message);
+                    if(data.message === "Acesso negado." || data.message === "Sessão inválida ou expirada.") {
+                        alert("Sessão expirada. Por favor, faça login novamente.");
+                        window.location.reload();
+                    }
                 }
             } catch (err) { 
                 console.error("Erro técnico na chamada do Dashboard:", err);
@@ -374,7 +398,14 @@
             } catch (e) {
                 alert("Erro ao conectar com o servidor de segurança.");
             }
+        }function sair() {
+
+            sessionStorage.removeItem('asyncx_token');
+            sessionStorage.clear();
+            alert("Sessão encerrada.");
+            window.location.href = 'restrito.html';
         }
+
     </script>
 </body>
 </html>
