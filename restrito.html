@@ -294,7 +294,11 @@
             document.getElementById('setupSection').style.display = 'none';
             document.getElementById('dashboardSection').classList.remove('hidden');
             document.getElementById('btnSair').classList.remove('hidden');
-
+            const statusTxt = document.getElementById('statusTxt');
+            const clienteNome = document.getElementById('clienteNome');
+            
+            if (clienteNome) clienteNome.innerText = "VALIDANDO SESSÃO...";
+            if (statusTxt) statusTxt.innerText = "VERIFICANDO CREDENCIAIS...";
             // 2. Feedback imediato com o nome do login (se disponível)
             if (userBasicData.nome) {
                 document.getElementById('clienteNome').innerText = userBasicData.nome.toUpperCase();
