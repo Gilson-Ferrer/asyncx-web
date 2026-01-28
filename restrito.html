@@ -141,6 +141,7 @@
             <div class="glass p-10 rounded-[40px] premium-shadow">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Segurança da Conta</p>
                 <input type="password" id="novaSenha" placeholder="Nova Senha" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition mb-4 text-xs">
+                <input type="text" id="mfaAtualizarSenha" placeholder="CÓDIGO AUTHENTICATOR" maxlength="6" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition mb-4 text-center font-bold tracking-widest text-xs">
                 <button onclick="atualizarSenha()" class="w-full bg-black text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg">Atualizar Senha</button>
             </div>
         </div>
@@ -413,30 +414,35 @@
 
         async function atualizarSenha() {
             const novaSenha = document.getElementById('novaSenha').value;
-            const email = document.getElementById('email').value; // Recupera do login anterior
+            const mfaToken = document.getElementById('mfaAtualizarSenha').value; // Captura o MFA
+            const token = sessionStorage.getItem('asyncx_token');
 
-            // Aplicação da Política de Segurança
             const erroSenha = validarForcaSenha(novaSenha);
             if (erroSenha) return alert(erroSenha);
+            if (!mfaToken) return alert("Digite o código MFA para confirmar.");
 
             try {
                 const res = await fetch(`${API_URL}/user/change-password`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, novaSenha })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ novaSenha, mfaToken }) // Envia ambos
                 });
                 const data = await res.json();
                 
                 if (data.success) {
-                    alert("Senha atualizada com sucesso! Use-a em seu próximo acesso.");
-                    document.getElementById('novaSenha').value = ''; // Limpa o campo
+                    alert("Senha atualizada com sucesso!");
+                    document.getElementById('novaSenha').value = '';
+                    document.getElementById('mfaAtualizarSenha').value = '';
                 } else {
-                    alert(data.message || "Erro ao atualizar senha.");
+                    alert(data.message);
                 }
-            } catch (e) {
-                alert("Erro ao conectar com o servidor de segurança.");
-            }
-        }function sair() {
+            } catch (e) { alert("Erro no servidor."); }
+        }
+        
+        function sair() {
 
             sessionStorage.removeItem('asyncx_token');
             sessionStorage.clear();
