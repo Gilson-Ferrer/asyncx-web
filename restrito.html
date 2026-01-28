@@ -469,15 +469,16 @@
             }
         }
 
-        // Função para disparar o e-mail de recuperação
         async function solicitarReset() {
             const email = document.getElementById('emailForgot').value;
             const btn = document.getElementById('btnForgot');
 
             if(!email) return alert("Informe seu e-mail.");
 
+            // Desabilita para evitar cliques duplos
             btn.disabled = true;
             btn.innerText = "PROCESSANDO...";
+            console.log("Iniciando solicitação de reset para:", email);
 
             try {
                 const response = await fetch(`${API_URL}/auth/forgot-password`, {
@@ -485,19 +486,24 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
                 });
+                
                 const result = await response.json();
+                console.log("Resposta do servidor:", result);
 
                 if (response.ok) {
-                    alert("Sucesso! Se o e-mail estiver correto, você receberá as instruções em instantes.");
+                    alert("Sucesso! Verifique sua caixa de entrada (e a pasta de spam) em instantes.");
+                    // Limpa o campo e volta para a tela de login
+                    document.getElementById('emailForgot').value = '';
                     toggleEsqueciSenha(false);
                 } else {
-                    alert(result.message);
+                    alert(result.message || "Erro ao processar solicitação.");
                 }
             } catch (err) {
-                alert("Erro ao conectar com o servidor ASYNCX.");
+                console.error("Erro na requisição:", err);
+                alert("Erro ao conectar com o servidor ASYNCX. Verifique sua conexão.");
             } finally {
                 btn.disabled = false;
-                btn.innerText = "Enviar Link";
+                btn.innerText = "Enviar Link de Recuperação"; // Texto original exato
             }
         }
 
