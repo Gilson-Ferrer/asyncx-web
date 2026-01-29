@@ -12,6 +12,8 @@
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.04); }
         .premium-shadow { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
         .fade-in { animation: fadeIn 0.6s ease-out; }
+        .status-pago { color: #10b981; background-color: #f0fdf4; border-color: #bbf7d0; }
+        .status-pendente { color: #d97706; background-color: #fffbeb; border-color: #fef3c7; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes pulse-green {
             0% { opacity: 1; transform: scale(1); }
@@ -430,7 +432,6 @@
                     document.getElementById('perfilDoc').innerText = p.DOCUMENTO_IDENTIDADE || "NÃO INFORMADO";
                     document.getElementById('perfilEnd').innerText = p.ENDERECO_COMPLETO || "NÃO INFORMADO";
                     
-                    // 4. Status e Dispositivos
                     // 4. Status e Dispositivos (Lógica Híbrida Mensal vs Avulso)
                     const led = document.getElementById('statusLed');
                     const txt = document.getElementById('statusTxt');
@@ -469,27 +470,41 @@
                     // 6. Renderizar FINANCEIRO (Tabela ASYNCX_BILLING)
                     const fList = document.getElementById('financeList');
                     fList.innerHTML = ''; 
+
                     if (data.financeiro && data.financeiro.length > 0) {
                         data.financeiro.forEach(bill => {
                             const div = document.createElement('div');
-                            div.className = "glass p-6 rounded-2xl flex justify-between items-center border border-slate-50";
                             
-                            const faturaId = bill.ASAAS_PAYMENT_ID ? bill.ASAAS_PAYMENT_ID.substring(0, 8) : "REF";
+                            // Definição de Cores e Estilos baseada no Status
+                            const isPago = bill.STATUS_PAGO === 'PAGO';
+                            const statusClasse = isPago ? 'status-pago' : 'status-pendente';
+                            const btnTexto = isPago ? 'RECIBO' : 'EFETUAR PAGAMENTO';
+                            const btnClasse = isPago ? 'bg-emerald-600' : 'bg-black';
+
+                            div.className = `glass p-6 rounded-[30px] flex justify-between items-center border border-slate-50 hover:shadow-lg transition-all duration-300`;
+                            
                             const dataVenc = new Date(bill.DATA_VENCIMENTO).toLocaleDateString('pt-BR');
                             
                             div.innerHTML = `
-                                <div>
-                                    <p class="text-[10px] font-black uppercase">R$ ${bill.VALOR}</p>
-                                    <p class="text-[8px] text-gray-400 uppercase font-bold">Venc: ${dataVenc} - ${faturaId}</p>
+                                <div class="flex flex-col gap-1">
+                                    <span class="px-3 py-1 rounded-full text-[7px] font-black uppercase tracking-tighter w-fit ${statusClasse}">
+                                        ${bill.STATUS_PAGO}
+                                    </span>
+                                    <p class="text-[10px] font-black text-gray-800 uppercase mt-2">${bill.DESCRICAO || 'Serviço de Segurança'}</p>
+                                    <p class="text-[11px] font-black text-blue-600">R$ ${Number(bill.VALOR).toFixed(2)}</p>
+                                    <p class="text-[8px] text-gray-400 uppercase font-bold">Vencimento: ${dataVenc}</p>
                                 </div>
-                                <a href="${bill.LINK_BOLETO || '#'}" target="_blank" class="bg-black text-white px-4 py-2 rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg">
-                                    ${bill.STATUS_PAGO === 'PAGO' ? 'RECIBO' : 'PAGAR'}
-                                </a>
+                                <div class="flex flex-col items-end">
+                                    <a href="${bill.LINK_BOLETO || '#'}" target="_blank" 
+                                    class="${btnClasse} text-white px-5 py-3 rounded-2xl text-[8px] font-black uppercase tracking-widest hover:opacity-80 transition shadow-md">
+                                        ${btnTexto}
+                                    </a>
+                                </div>
                             `;
                             fList.appendChild(div);
                         });
                     } else {
-                        fList.innerHTML = '<p class="text-[9px] text-gray-400 italic text-center col-span-2 py-4 uppercase font-bold tracking-widest">Nenhum histórico financeiro</p>';
+                        fList.innerHTML = '<p class="text-[9px] text-gray-400 italic text-center col-span-2 py-8 uppercase font-bold tracking-widest">Aguardando geração de faturamento...</p>';
                     }
 
                 } else {
