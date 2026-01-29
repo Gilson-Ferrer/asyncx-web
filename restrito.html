@@ -11,12 +11,15 @@
         body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #111827; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.04); }
         .premium-shadow { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
-        .status-on { color: #2563eb; }
-        .status-off { color: #d1d5db; }
-        .pulse-blue { animation: pulseB 2s infinite; }
-        @keyframes pulseB { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
         .fade-in { animation: fadeIn 0.6s ease-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse-green {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .led-pulse { animation: pulse-green 2s infinite; color: #22c55e; } /* Verde Tailwind */
+        .led-fixed { color: #2563eb; } /* Azul Tailwind */
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -428,14 +431,23 @@
                     document.getElementById('perfilEnd').innerText = p.ENDERECO_COMPLETO || "NÃO INFORMADO";
                     
                     // 4. Status e Dispositivos
+                    // 4. Status e Dispositivos (Lógica Híbrida Mensal vs Avulso)
                     const led = document.getElementById('statusLed');
                     const txt = document.getElementById('statusTxt');
-                    document.getElementById('servicoTxt').innerText = "Segurança Gerenciada ASYNCX";
+                    const servTxt = document.getElementById('servicoTxt');
 
-                    if (p.STATUS_MONITORAMENTO === 'ATIVO' || p.STATUS_MONITORAMENTO === 'PENDENTE') {
-                        led.className = "text-5xl mb-2 status-on pulse-blue";
+                    if (p.TIPO_SERVICO === 'MENSAL') {
+                        // Configuração para Monitoramento Ativo (Verde Pulsante)
+                        led.className = "text-5xl mb-2 led-pulse"; // Usa a nova classe CSS verde
                         txt.innerText = `PROTEGIDO (${p.QTD_DISPOSITIVOS} DEVICES)`;
-                        txt.className = "text-[10px] font-bold uppercase tracking-widest status-on";
+                        txt.className = "text-[10px] font-bold uppercase tracking-widest text-green-600";
+                        servTxt.innerText = "Monitoramento Ativo";
+                    } else {
+                        // Configuração para Serviços Avulsos (Azul Fixo)
+                        led.className = "text-5xl mb-2 led-fixed"; // Usa a nova classe CSS azul
+                        txt.innerText = "SERVIÇO CONCLUÍDO";
+                        txt.className = "text-[10px] font-bold uppercase tracking-widest text-blue-600";
+                        servTxt.innerText = "Serviços Diversos";
                     }
 
                     // 5. Renderizar DOCUMENTOS (Tabela ASYNCX_DOCUMENTS)
