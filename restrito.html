@@ -171,7 +171,7 @@
     </div> <div id="tab-finance" class="tab-content hidden fade-in">
         <div class="glass p-10 rounded-[40px] premium-shadow">
             <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-8 text-center">Histórico Financeiro & Pagamentos</p>
-            <div id="financeList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            <div id="financeList" class="flex flex-col gap-4"></div>
         </div>
     </div>
 
@@ -481,24 +481,29 @@
                             const btnTexto = isPago ? 'RECIBO' : 'EFETUAR PAGAMENTO';
                             const btnClasse = isPago ? 'bg-emerald-600' : 'bg-black';
 
-                            div.className = `glass p-6 rounded-[30px] flex justify-between items-center border border-slate-50 hover:shadow-lg transition-all duration-300`;
+                            div.className = `glass p-6 rounded-[30px] flex justify-between items-center border border-slate-50 hover:shadow-lg transition-all duration-300 w-full mb-4`;
                             
                             const dataVenc = new Date(bill.DATA_VENCIMENTO).toLocaleDateString('pt-BR');
                             
                             div.innerHTML = `
-                                <div class="flex flex-col gap-1">
+                                <div class="flex flex-col gap-1 flex-1">
                                     <span class="px-3 py-1 rounded-full text-[7px] font-black uppercase tracking-tighter w-fit ${statusClasse}">
                                         ${bill.STATUS_PAGO}
                                     </span>
                                     <p class="text-[10px] font-black text-gray-800 uppercase mt-2">${bill.DESCRICAO || 'Serviço de Segurança'}</p>
-                                    <p class="text-[11px] font-black text-blue-600">R$ ${Number(bill.VALOR).toFixed(2)}</p>
-                                    <p class="text-[8px] text-gray-400 uppercase font-bold">Vencimento: ${dataVenc}</p>
                                 </div>
-                                <div class="flex flex-col items-end">
+
+                                <div class="hidden md:flex flex-col items-center flex-1">
+                                    <p class="text-[11px] font-black text-blue-600">R$ ${Number(bill.VALOR).toFixed(2)}</p>
+                                    <p class="text-[8px] text-gray-400 uppercase font-bold tracking-widest">Vencimento: ${dataVenc}</p>
+                                </div>
+
+                                <div class="flex flex-col items-end flex-1">
                                     <a href="${bill.LINK_BOLETO || '#'}" target="_blank" 
-                                    class="${btnClasse} text-white px-5 py-3 rounded-2xl text-[8px] font-black uppercase tracking-widest hover:opacity-80 transition shadow-md">
+                                    class="${btnClasse} text-white px-6 py-3 rounded-2xl text-[8px] font-black uppercase tracking-widest hover:opacity-80 transition shadow-md">
                                         ${btnTexto}
                                     </a>
+                                    <p class="md:hidden text-[7px] text-gray-400 uppercase font-bold mt-1">${dataVenc}</p>
                                 </div>
                             `;
                             fList.appendChild(div);
