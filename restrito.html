@@ -89,7 +89,7 @@
         <div class="glass p-8 rounded-[40px] premium-shadow border-blue-100 border flex flex-col items-center">
             
             <div id="mfaContainer" class="w-full flex flex-col items-center">
-                <p class="text-[10px] text-gray-400 mb-6 font-black uppercase tracking-widest">Vincular Authenticator</p>
+                <p class="text-[10px] text-gray-400 mb-6 font-black uppercase tracking-widest">Vincular Dispositivo</p>
                 
                 <div class="bg-white p-4 rounded-3xl border border-gray-100 mb-6 shadow-inner">
                     <img id="qrCodeImg" src="" alt="MFA QR Code" class="w-48 h-48">
@@ -103,14 +103,15 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" class="h-8">
                     </a>
                 </div>
-
-                <p class="text-[10px] text-gray-400 mb-4 font-bold uppercase">Digite o código de 6 dígitos gerado:</p>
-                <input type="text" id="setupMfa" placeholder="000 000" maxlength="6" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 text-center text-xl font-bold tracking-[0.5em] mb-8">
             </div>
 
             <div class="w-full space-y-4 text-left">
                 <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest text-center mb-2">Definir Nova Senha</p>
                 
+                <p class="text-[9px] text-blue-600 font-bold uppercase tracking-tighter text-center leading-relaxed mb-4">
+                    A senha deverá conter no mínimo 8 caracteres,<br>contendo 1 letra maiúscula, 1 número e 1 caracter especial.
+                </p>
+
                 <div class="relative">
                     <input type="password" id="setupSenha" placeholder="Nova Senha" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 pr-12">
                     <button type="button" onclick="toggleView('setupSenha')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600">
@@ -130,6 +131,11 @@
                         </svg>
                     </button>
                 </div>
+            </div>
+
+            <div class="w-full mt-8">
+                <p class="text-[10px] text-gray-400 mb-4 font-bold uppercase text-center">Digite o código de 6 dígitos gerado:</p>
+                <input type="text" id="setupMfa" placeholder="000 000" maxlength="6" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition border border-gray-100 text-center text-xl font-bold tracking-[0.5em]">
             </div>
 
             <button onclick="finalizarSetup()" id="btnFinalizar" class="w-full bg-black text-white py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-xl mt-8">
@@ -236,10 +242,12 @@
         function validarForcaSenha(senha) {
             const minComprimento = senha.length >= 8;
             const temMaiuscula = /[A-Z]/.test(senha);
+            const temNumero = /[0-9]/.test(senha);
             const temEspecial = /[!@#$%^&*(),.?":{}|\/|<>]/.test(senha);
 
             if (!minComprimento) return "A senha deve ter no mínimo 8 caracteres.";
             if (!temMaiuscula) return "A senha deve conter ao menos uma letra maiúscula.";
+            if (!temNumero) return "A senha deve conter ao menos um número.";
             if (!temEspecial) return "A senha deve conter ao menos um caractere especial.";
             
             return null; // Senha válida
