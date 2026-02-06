@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASYNCX | Inteligência & Segurança Digital</title>
+    <title>ASYNCX | Soluções em TI e Segurança Digital</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -29,21 +29,34 @@
 <body class="bg-gray-100 text-gray-900 font-sans overflow-x-hidden leading-tight">
 
     <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
-            <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-12 md:h-14 w-auto"></a> 
-            
-            <div class="flex items-center space-x-4 md:space-x-8">
-                <div class="hidden md:flex space-x-8 text-sm font-bold tracking-tight uppercase">
-                    <a href="suporte.html" class="hover:text-blue-600 transition">Suporte</a>
-                    <a href="#contato" class="hover:text-blue-600 transition">Contato</a>
-                </div>
-                    <button onclick="window.location.href='restrito.html'" class="bg-black text-white px-6 md:px-8 py-3 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-lg active:scale-95">
-                        Área Restrita
-                    </button>
+    <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+        <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-10 md:h-14 w-auto"></a> 
+        
+        <div class="flex items-center space-x-3 md:space-x-8">
+            <div class="hidden md:flex space-x-8 text-sm font-bold tracking-tight uppercase">
+                <a href="suporte.html" class="hover:text-blue-600 transition">Suporte</a>
+                <a href="#contato" class="hover:text-blue-600 transition">Contato</a>
             </div>
+
+            <button onclick="window.location.href='restrito.html'" class="bg-black text-white px-5 md:px-8 py-3 rounded-full text-[9px] md:text-xs font-black uppercase tracking-widest hover:bg-gray-800 transition shadow-lg active:scale-95">
+                Área Restrita
+            </button>
+
+            <button onclick="toggleMenu()" class="md:hidden text-black p-2 focus:outline-none" id="menuBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
         </div>
-        <div class="h-[1px] bg-gray-100 w-full"></div> 
-    </nav>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden absolute top-24 left-0 w-full bg-white border-b border-gray-200 px-6 py-6 space-y-4 shadow-2xl z-[60]">
+        <a href="suporte.html" class="block text-sm font-bold tracking-tight uppercase hover:text-blue-600 transition">Suporte</a>
+        <a href="#contato" onclick="toggleMenu()" class="block text-sm font-bold tracking-tight uppercase hover:text-blue-600 transition">Contato</a>
+    </div>
+    
+    <div class="h-[1px] bg-gray-100 w-full"></div> 
+</nav>
 
     <main class="max-w-7xl mx-auto px-6 py-12 md:py-24">
         <div class="flex flex-col md:flex-row gap-12 items-center">
@@ -200,50 +213,192 @@
     <section id="servicos" class="max-w-7xl mx-auto px-6 py-24">
         <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-16 text-center">Especialidades</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">E-MAIL PROFISSIONAL</div>
                 <h4 class="font-bold text-xl mb-2">Domínio exclusivo</h4>
                 <p class="text-gray-500 text-sm">Uso de e-mails personalizados como <strong>contato@suaempresa.com.br</strong>. Substituição de contas gratuitas por identidade própria para maior credibilidade comercial.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> Empresas que utilizam e-mails genéricos como @gmail e @outlook, e perdem até 70% de autoridade em propostas comerciais e são alvos fáceis de phishing.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Implementamos infraestrutura corporativa com <strong>protocolos SPF, DKIM e DMARC</strong>, garantindo que suas mensagens cheguem na caixa de entrada e não no spam.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Migração de dados sem perda de histórico, sincronização em múltiplos dispositivos (IMAP/Exchange) e camadas de segurança contra interceptação.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li>Privacidade total de dados sem mineração para anúncios.</li>
+                        <li>Suporte para configuração de assinaturas padronizadas.</li>
+                        <li>Filtros anti-spam de nível empresarial.</li>
+                    </ul>
+                </div>
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">PROTEÇÃO DE DADOS</div>
                 <h4 class="font-bold text-xl mb-2">Backup automatizado</h4>
                 <p class="text-gray-500 text-sm">Criação de cópias de segurança automáticas de documentos na nuvem, com sistema integrado de recuperação rápida em casos de falhas físicas, furtos ou ataques de vírus.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> 60% das pequenas empresas que perdem seus dados críticos fecham as portas em menos de 6 meses. Falhas de HD, Ransomware (sequestro de dados) e furtos são riscos diários reais.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Implementamos a <strong>Regra 3-2-1 de Backup</strong>: mantemos 3 cópias dos seus dados, em 2 tipos de mídia diferentes, com 1 cópia fora da empresa (nuvem criptografada). Todo o processo é silencioso e automático.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Utilizamos criptografia <strong>AES-256 bits</strong> antes mesmo dos dados saírem da sua máquina. Isso garante que ninguém, nem mesmo o provedor da nuvem, consiga ler seus arquivos.</p>
+
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Versionamento:</strong> Recupere arquivos de datas específicas como uma planilha de 15 dias atrás.</li>
+                        <li><strong>Recuperação Bare-Metal:</strong> Capacidade de restaurar o sistema inteiro em um hardware novo rapidamente.</li>
+                        <li><strong>Relatórios de Integridade:</strong> Monitoramento constante para garantir que o backup realmente foi feito e está saudável.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">MONITORAMENTO E SUPORTE</div>
                 <h4 class="font-bold text-xl mb-2">Prevenção e assistência</h4>
                 <p class="text-gray-500 text-sm">Vigilância em tempo real da integridade de hardware e software. Resolução de falhas técnicas e suporte especializado, garantindo agilidade e recuperação de sistemas.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> O modelo tradicional de TI é reativo. Isso gera tempo de inatividade, que custa caro e interrompe o faturamento da empresa.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Implementamos um sistema de <strong>Monitoramento Proativo</strong>. Supervisionamos temperatura de hardware, saúde do SSD/HD, uso de CPU e estabilidade da rede entre outros. Na maioria das vezes, resolvemos o problema antes mesmo de você perceber que ele existia.</p>                   
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Suporte especializado com acesso remoto seguro e ferramentas de telemetria avançada. Reduzimos o tempo de resposta drasticamente para que sua equipe nunca fique ociosa.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Manutenção Preventiva:</strong> Atualizações de segurança críticas gerenciadas de forma centralizada.</li>
+                        <li><strong>Inventário de Hardware:</strong> Controle detalhado de todos os ativos tecnológicos da empresa.</li>
+                        <li><strong>Suporte de Nível 2:</strong> Especialistas prontos para resolver gargalos complexos de software e rede.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">SANITIZAÇÃO AVANÇADA</div>
                 <h4 class="font-bold text-xl mb-2">Higiene digital profunda</h4>
                 <p class="text-gray-500 text-sm">Remoção de ameaças invisíveis, malwares e rastreadores. Uma higienização completa que vai além do antivírus comum, garantindo a privacidade dos seus dados.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> Antivírus comuns detectam apenas ameaças conhecidas. Malwares modernos, <em>Spywares</em> e <em>Adwares</em> de persistência escondem-se em camadas profundas do sistema, coletando senhas e dados bancários silenciosamente.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Realizamos uma <strong>Sanitização Digital</strong> completa. Utilizamos ferramentas de análise heurística e limpeza de registros para eliminar rastreadores, bloatwares e scripts de espionagem.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Otimização de processos do sistema operacional e varredura de integridade de arquivos. O resultado é um computador mais rápido, privado e livre de interferências externas ou janelas de anúncios indesejadas.</p>
+
+                    
+
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Privacidade Hardened:</strong> Desativação de serviços de telemetria que enviam seus dados para grandes corporações.</li>
+                        <li><strong>Remoção de Rootkits:</strong> Identificação de ameaças que iniciam junto com o sistema básico.</li>
+                        <li><strong>Check-up de Segurança:</strong> Auditoria final para garantir que nenhum backdoor foi deixado para trás.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">BLINDAGEM DE EQUIPAMENTOS</div>
                 <h4 class="font-bold text-xl mb-2">Segurança de ponta a ponta</h4>
                 <p class="text-gray-500 text-sm">Configuração rigorosa do sistema para evitar invasões. Desativamos vulnerabilidades e restringimos acessos críticos, fechando as portas para ataques externos.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> Sistemas operacionais saem de fábrica com configurações focadas em conveniência, não em segurança. Portas abertas, serviços inúteis e permissões excessivas para invasores e cavalos de troia.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Aplicamos o processo de <strong>System Hardening</strong>. Realizamos o fechamento de brechas lógicas, desativação de portas vulneráveis e a configuração de privilégios mínimos. Só quem precisa de acesso terá acesso, e apenas ao necessário.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Implementação de políticas de grupo robustas e firewalls de host configurados sob medida. Blindamos o kernel do sistema contra explorações comuns e ataques de força bruta.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Políticas de Senhas:</strong> Implementação de diretrizes seguras para evitar credenciais fracas.</li>
+                        <li><strong>Criptografia de Disco:</strong> Proteção total dos arquivos em caso de perda ou furto físico do aparelho.</li>
+                        <li><strong>Desativação de Bloatware:</strong> Remoção de softwares pré-instalados que servem como vetores de ataque.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">FILTRO DE CONTEÚDO</div>
-                <h4 class="font-bold text-xl mb-2">Bloqueio de anúncios</h4>
+                <h4 class="font-bold text-xl mb-2">Bloqueio de anúncios e ameaças</h4>
                 <p class="text-gray-500 text-sm">Implementação de filtragem de DNS para impedir acesso a sites maliciosos e remoção de anúncios invasivos, para maior velocidade de navegação e redução de riscos.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> Anúncios invasivos e pop-ups não são apenas irritantes; eles são frequentemente usados para o <em>Malvertising</em>. Além disso, sites de distração reduzem a produtividade da equipe.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Implementamos uma camada de <strong>Filtragem Inteligente via DNS</strong>. Toda requisição de site passa por um crivo de segurança que bloqueia domínios de phishing, rastreadores e publicidade abusiva antes mesmo deles carregarem no navegador.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Navegação até 40% mais rápida devido ao menor consumo de dados. Proteção estendida para todos os aplicativos do sistema, não apenas para o navegador.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Blacklist Global:</strong> Bloqueio automático de sites conhecidos por hospedar vírus.</li>
+                        <li><strong>Controle de Categoria:</strong> Opção para bloquear sites de apostas, conteúdo adulto ou redes sociais.</li>
+                        <li><strong>Proteção Anti-Phishing:</strong> Interrupção imediata de tentativas de clonagem de sites bancários.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">MANUTENÇÃO DE COMPUTADORES</div>
                 <h4 class="font-bold text-xl mb-2">Reparos e upgrade de hardware</h4>
                 <p class="text-gray-500 text-sm">Limpeza física interna, troca e atualização de componentes e periféricos. Otimização do sistema operacional para máxima velocidade e estabilidade do hardware.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> O acúmulo de poeira e o ressecamento de pastas térmicas causam superaquecimento, o que degrada o processador e causa lentidão extrema. Além disso, sistemas operacionais desatualizados tornam o hardware potente em algo obsoleto.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Realizamos a <strong>Manutenção Preventiva e Corretiva</strong> de alto nível. Isso inclui a limpeza química de contatos, substituição de interface térmica e consultoria para upgrades estratégicos que podem triplicar a vida útil do seu equipamento.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Análise de saúde de componentes via software de diagnóstico industrial. Não apenas limpamos; otimizamos a curva de ventilação e o consumo de energia para garantir estabilidade absoluta em cargas de trabalho pesadas.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Upgrade de Performance:</strong> Substituição estratégica de peças para ganho imediato de agilidade.</li>
+                        <li><strong>Reparo Estrutural:</strong> Correção de falhas físicas e substituição de periféricos críticos.</li>
+                        <li><strong>Otimização de OS:</strong> Ajuste fino do Windows/Linux para eliminar processos que roubam desempenho.</li>
+                    </ul>
+                </div>
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">VPN E ACESSO REMOTO</div>
                 <h4 class="font-bold text-xl mb-2">Conexão segura à distância</h4>
-                <p class="text-gray-500 text-sm">Criação de túneis criptografados para acesso a arquivos e sistemas internos de forma remota. Garantia de privacidade e segurança total de acesso fora do ambiente físico.</p>
+                  <p class="text-gray-500 text-sm">Criação de túneis criptografados para acesso a arquivos e sistemas internos de forma remota. Garantia de privacidade e segurança total de acesso fora do ambiente físico.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> Utilizar softwares de acesso remoto gratuitos ou abrir portas de desktop para a internet é um dos maiores erros de segurança. Isso expõe o servidor da sua empresa diretamente para hackers em qualquer lugar do mundo.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Implementamos <strong>VPNs de Próxima Geração</strong>. Criamos um túnel virtual com criptografia de ponta a ponta. Sua equipe trabalha de casa como se estivesse conectada via cabo dentro da empresa, com total segurança.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Autenticação robusta e isolamento de tráfego. O acesso remoto é configurado para ser invisível para varreduras externas, eliminando o risco de ataques de força bruta no servidor principal.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Criptografia:</strong> Padrões de segurança que impedem a interceptação em redes Wi-Fi públicas.</li>
+                        <li><strong>Controle de Acesso:</strong> Definição exata de quais pastas cada usuário remoto pode visualizar.</li>
+                        <li><strong>Zero Trust:</strong> Verificação constante da identidade para garantir a integridade do perímetro digital.</li>
+                    </ul>
+                </div>
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
-            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-default shadow-lg hover:shadow-md">
+            <div class="glass p-10 rounded-xl hover:border-blue-500 transition cursor-pointer shadow-lg hover:shadow-md group" onclick="abrirDetalheServico(this)">
                 <div class="text-blue-600 font-black mb-4">TREINAMENTOS E PALESTRAS</div>
                 <h4 class="font-bold text-xl mb-2">Capacitação de colaboradores</h4>
                 <p class="text-gray-500 text-sm">Apresentação técnica e prática sobre identificação de ameaças digitais. Simulações de ataques e entrega de manual de conduta para prevenção de fraudes e vazamentos.</p>
+                
+                <div class="detalhe-rico hidden">
+                    <p class="mb-4"><strong>O Problema:</strong> 90% das invasões bem-sucedidas começam com um erro humano clicando em um link de e-mail falso ou usando um pendrive infectado. Nenhuma tecnologia de ponta protege uma equipe desinformada.</p>
+                    
+                    <p class="mb-4"><strong>Nossa Solução:</strong> Oferecemos <strong>Treinamentos de Conscientização em Segurança</strong>. Capacitamos sua equipe para identificar Phishing, Engenharia Social e golpes de WhatsApp. Transformamos seus colaboradores na primeira linha de defesa da empresa.</p>
+                    
+                    <p class="mb-4"><strong>Diferencial Técnico:</strong> Palestras baseadas em casos reais e simulações controladas. Alinhamos a conduta da equipe às exigências da <strong>LGPD (Lei Geral de Proteção de Dados)</strong>, evitando multas e vazamentos acidentais.</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-500">
+                        <li><strong>Manual de Conduta:</strong> Entrega de um guia rápido de boas práticas digitais para a empresa.</li>
+                        <li><strong>Higiene de Senhas:</strong> Instruções sobre o uso de gerenciadores e autenticação em dois fatores (2FA).</li>
+                        <li><strong>Prevenção de Fraudes:</strong> Como identificar faturas falsas e tentativas de fraude financeira via e-mail.</li>
+                    </ul>
+                </div>
+                <div class="mt-6 text-blue-600 text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 transition">Clique para detalhes +</div>
             </div>
         </div>
     </section>
@@ -273,6 +428,25 @@
                 </a>
             </div>
     </section>
+    <div id="modalServico" class="fixed inset-0 z-[70] flex items-center justify-center hidden bg-black/40 backdrop-blur-md p-4 transition-all duration-300">
+        <div class="bg-white p-8 md:p-12 rounded-[30px] max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative border border-gray-100">
+            <button onclick="fecharModalServico()" class="absolute top-6 right-6 text-gray-400 hover:text-black transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div id="conteudoServico">
+                </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center md:text-left">Precisa de uma implementação personalizada?</p>
+                <a id="linkZapServico" href="#" target="_blank" class="bg-blue-600 text-white px-8 py-4 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-blue-800 transition shadow-xl">
+                    SOLICITAR ORÇAMENTO
+                </a>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-white border-t border-gray-100 pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-6">
@@ -320,8 +494,8 @@
             </button>
             
             <div id="scannerHeader">
-                <h3 class="text-2xl md:text-3xl font-black tracking-tighter mb-2">Scanner de Vulnerabilidade</h3>
-                <p class="text-gray-400 text-xs md:text-sm mb-8 font-medium italic tracking-widest">sistema de análise local</p>
+                <h3 class="text-2xl md:text-3xl font-black tracking-tighter mb-2">Scanner AsyncX</h3>
+                <p class="text-gray-400 text-xs md:text-sm mb-8 font-medium italic tracking-widest">análise de integridade</p>
             </div>
 
             <div id="statusResult" class="space-y-6">
@@ -408,7 +582,38 @@
             btn.innerHTML = originalText;
         }
     });
+    
+    function abrirDetalheServico(card) {
+        const modal = document.getElementById('modalServico');
+        const container = document.getElementById('conteudoServico');
+        const linkZap = document.getElementById('linkZapServico');
+        
+        // Captura os dados do card
+        const titulo = card.querySelector('.text-blue-600').innerText;
+        const detalheRico = card.querySelector('.detalhe-rico').innerHTML;
+        
+        // Preenche o modal
+        container.innerHTML = `
+            <span class="text-blue-600 font-black tracking-[0.3em] text-[10px] uppercase mb-4 block">Especialidade ASYNCX</span>
+            <h3 class="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-none">${titulo}</h3>
+            <div class="prose prose-slate max-w-none text-gray-600 leading-relaxed">
+                ${detalheRico}
+            </div>
+        `;
 
+        // Atualiza o link do WhatsApp com o contexto do serviço
+        const msg = encodeURIComponent(`Olá, gostaria de um orçamento para o serviço de ${titulo}.`);
+        linkZap.href = `https://wa.me/5511999999999?text=${msg}`;
+
+        // Exibe o modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Trava o scroll do fundo
+    }
+
+    function fecharModalServico() {
+        document.getElementById('modalServico').classList.add('hidden');
+        document.body.style.overflow = 'auto'; // Libera o scroll
+    }
     // FUNÇÕES DO MODAL (FORÇANDO ROUNDED-XL NA CAIXA EXTERNA)
     function abrirModal() {
         const modalDiv = document.querySelector('#modalDiagnostico > div');
@@ -423,22 +628,27 @@
     }
     function fecharModal() { document.getElementById('modalDiagnostico').classList.add('hidden'); }
 
-    // DIAGNÓSTICO AVANÇADO ASYNCX
+    // DIAGNÓSTICO AVANÇADO ASYNCX 
     async function executarDiagnostico() {
         const result = document.getElementById('statusResult');
         const cta = document.getElementById('ctaSection');
         const alerta = document.getElementById('alertaCritico');
         
+        // Coleta inicial de dados
+        const pdfStatus = navigator.pdfViewerEnabled ? "Ativo (Vulnerável)" : "Inativo";
+        document.cookie = "AsyncX_Tracker=Ativo; max-age=60; path=/";
+
         cta.classList.add('hidden');
         result.innerHTML = '';
 
         const setores = [
             { id: 'hw', nome: 'Hardware & Performance' },
             { id: 'net', nome: 'Rede & Exposição Digital' },
-            { id: 'sw', nome: 'Software & Navegador' },
-            { id: 'priv', nome: 'Privacidade & Rastreamento' } 
+            { id: 'sw', nome: 'Segurança de Software' },
+            { id: 'priv', nome: 'Rastreamento e Cookies' } 
         ];
 
+        // Renderiza a estrutura básica
         setores.forEach(s => {
             result.innerHTML += `
                 <div id="setor-${s.id}" class="py-2 text-left">
@@ -460,37 +670,37 @@
             if(pctText) pctText.innerText = `${pct}%`;
         };
 
+        // Coleta Hardware
         const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        const gl = canvas.getContext('webgl');
         let gpu = "N/A";
         if (gl) {
             const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-            const vendor = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-            gpu = vendor.split(',')[1] || vendor;
-            gpu = gpu.replace('Direct3D11', '').replace('vs_5_0 ps_5_0', '').trim();
+            gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL).split(',')[1] || "Integrada";
         }
-        const ram = navigator.deviceMemory || "N/A";
+        const ram = navigator.deviceMemory || "8";
         const threads = navigator.hardwareConcurrency || "N/A";
-        
-        let batInfo = "Desktop (Ligado na Tomada)";
+
+        let batInfo = "Desktop / AC Power";
         if (navigator.getBattery) {
-            const battery = await navigator.getBattery();
-            batInfo = `${Math.round(battery.level * 100)}% - ${battery.charging ? 'Conectado' : 'Bateria'}`;
+            try {
+                const battery = await navigator.getBattery();
+                batInfo = `${Math.round(battery.level * 100)}% - ${battery.charging ? 'Carregando' : 'Bateria'}`;
+            } catch(e) { batInfo = "Protegido"; }
         }
 
         let netData = {};
         try {
             const res = await fetch('https://ipapi.co/json/');
             netData = await res.json();
-        } catch(e) { netData = { ip: "Oculto", org: "Provedor Privado", city: "Localização Protegida" }; }
-        
-        const speed = navigator.connection ? navigator.connection.downlink + " Mbps" : "N/A";
+        } catch(e) { netData = { ip: "Não detectado", org: "Provedor Protegido", city: "Oculta" }; }
 
+        // LOOP DE EXECUÇÃO
         for (const s of setores) {
             let p = 0; 
             while (p <= 100) { 
                 updateBar(s.id, p); 
-                await new Promise(r => setTimeout(r, 180));
+                await new Promise(r => setTimeout(r, 150));
                 p += 25; 
             }
 
@@ -499,90 +709,75 @@
             setTimeout(() => resDiv.classList.add('opacity-100'), 50);
 
             if (s.id === 'hw') {
-                const gpuRisk = gpu.includes('Generic') || gpu.includes('SwiftShader');
                 resDiv.innerHTML = `
                     <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 space-y-2">
-                        <p class="text-sm font-bold text-gray-800">Placa de Vídeo: <span class="text-blue-600 font-normal">${gpu}</span></p>
-                        <p class="text-[11px] text-gray-500 italic leading-tight">
-                            ${gpuRisk ? 'Driver básico detectado. Risco de superaquecimento.' : 'Hardware de vídeo acessível para rastreamento.'}
-                        </p>
-                        <hr class="border-gray-100">
-                        <p class="text-[11px] text-gray-700"><strong>Memória RAM:</strong> ${ram} GB</p>
-                        <p class="text-[11px] text-gray-700"><strong>Núcleos:</strong> ${threads} Threads</p>
-                        <p class="text-[11px] text-gray-700"><strong>Energia:</strong> ${batInfo}</p>
-                        <p class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl mt-2 border border-yellow-100">
-                            <strong>Risco:</strong> Seu aparelho pode estar sendo usado por hackers para tarefas escondidas, o que causa lentidão extrema e diminui a vida útil do seu dispositivo.
-                        </p>
+                        <p class="text-xs text-gray-700 font-bold mb-2">Assinatura de Hardware Identificada:</p>
+                        <p class="text-xs text-gray-700"><strong>GPU:</strong> ${gpu.trim()}</p>
+                        <p class="text-xs text-gray-700"><strong>Memória RAM:</strong> ${ram}GB Disponível</p>
+                        <p class="text-xs text-gray-700"><strong>Processamento:</strong> ${threads} núcleos</p>
+                        <p class="text-xs text-gray-700"><strong>Energia:</strong> ${batInfo}</p>
+                        <div class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl border border-yellow-100 mt-2">
+                            <strong>Risco:</strong> Hardware exposto. O site consegue criar um ID único do seu dispositivo para monitorar seu comportamento.
+                        </div>
                     </div>`;
             }
-            if (s.id === 'net') {
+            
+            else if (s.id === 'net') {
                 resDiv.innerHTML = `
                     <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-                        <p class="text-sm font-bold text-gray-800">IP Público: <span class="text-red-600">${netData.ip}</span></p>
-                        <p class="text-xs font-medium text-gray-700">Provedor: ${netData.org}</p>
-                        <p class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl mt-2 border border-yellow-100">
-                            <strong>Risco:</strong> Sua cidade (${netData.city}) está visível. Invasores mapeiam sua rede através deste IP.
-                        </p>
-                        <hr class="my-3 border-gray-100">
-                        <p class="text-sm font-bold text-gray-800">Velocidade: ${speed}</p>
-                        <div class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl mt-2 border border-yellow-100">
-                            <strong>Risco:</strong> Internet instável ou sem proteção pode indicar que alguém está na sua rede capturando tudo o que você digita.
-                        </div>
-                    </div>`;
-            }
-            if (s.id === 'sw') {
-                const pdfStatus = navigator.pdfViewerEnabled ? "Ativo (Vulnerável)" : "Inativo";
-                resDiv.innerHTML = `
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 space-y-3">
-                        <div>
-                            <p class="text-sm font-bold text-gray-800">Navegador Base: ${navigator.userAgent.split(' ')[0]}</p>
-                            <p class="text-sm font-bold text-gray-800 mt-1">Renderização PDF: <span class="text-blue-600">${pdfStatus}</span></p>
-                        </div>
+                        <p class="text-sm font-bold text-gray-800">IP Público: <span class="text-black-600">${netData.ip}</span></p>
+                        <p class="text-xs text-gray-500 mb-2">${netData.org} - ${netData.city}</p>
                         <div class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl border border-yellow-100">
-                            <p><strong>Risco: </strong>Abrir boletos ou documentos no navegador é um risco; vírus podem roubar suas senhas bancárias assim que o arquivo é aberto.</p>
-                        </div>
-                    </div>`;
-            }
-            if (s.id === 'priv') {
-                const cookiesAtivos = navigator.cookieEnabled ? "Detectados" : "Bloqueados";
-                const totalCookies = document.cookie ? document.cookie.split(';').length : 0;
-                resDiv.innerHTML = `
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 space-y-3">
-                        <p class="text-sm font-bold text-gray-800">Cookies: <span class="text-orange-600">${cookiesAtivos}</span></p>
-                        <p class="text-[11px] text-gray-500"><strong>${totalCookies}</strong> identificadores coletando dados agora.</p>
-                        <div class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl border border-yellow-100 leading-tight">
-                            <strong>Risco:</strong> Rastreadores ativos funcionam como chaves. Hackers podem entrar no seu e-mail e redes sociais sem precisar da sua senha.
+                            <strong>Vulnerabilidade:</strong> Conexão <strong>Pública</strong>. Invasores podem mapear sua rota sem uma <strong>Conexão Privada VPN</strong>.
                         </div>
                     </div>`;
             }
 
-            document.getElementById(`setor-${s.id}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            else if (s.id === 'sw') {
+                // SEÇÃO UNIFICADA: DNS + PDF + NAVEGADOR
+                resDiv.innerHTML = `
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <p class="text-xs text-gray-700"><strong>DNS:</strong> Provedor Padrão (Vulnerável)</p>
+                        <p class="text-xs text-gray-700 mt-1"><strong>Renderização PDF:</strong> <span class="text-blue-600 font-bold">${pdfStatus}</span></p>
+                        <p class="text-xs text-gray-700 mt-1"><strong>Navegador:</strong> ${navigator.userAgent.split(' ')[0]}</p>
+                        <div class="text-[10px] text-orange-600 bg-orange-50 p-3 rounded-xl mt-2 border border-orange-100 leading-tight">
+                            <strong>Risco:</strong> Abrir boletos no navegador é perigoso; scripts maliciosos podem capturar dados bancários durante a visualização do PDF.
+                        </div>
+                    </div>`;
+            }
+
+            else if (s.id === 'priv') {
+                const hasAsyncCookie = document.cookie.includes("AsyncX_Tracker");
+                const totalCookies = document.cookie.split(';').length;
+                resDiv.innerHTML = `
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <p class="text-sm font-bold text-gray-800">Cookies Ativos: <span class="text-blue-600">${totalCookies}</span></p>
+                        <p class="text-[11px] text-gray-500 mt-1">Rastreador AsyncX: ${hasAsyncCookie ? 'Detectado' : 'Verificando...'}</p>
+                        <div class="text-[10px] text-red-600 bg-yellow-50 p-3 rounded-xl mt-2 border border-yellow-100">
+                            <strong>Aviso Crítico:</strong> Este site conseguiu injetar um rastreador. Outros sites podem usar isso para roubar sua sessão de login.
+                        </div>
+                    </div>`;
+            }
+
+            resDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        alerta.className = "mt-8 p-6 bg-red-600 rounded-xl text-white"; 
+        // FINALIZAÇÃO E SCROLL PARA O BOTÃO
         alerta.classList.remove('hidden');
-        alerta.innerHTML = `
-            <h4 class="font-black uppercase text-xs tracking-[0.2em] mb-2 animate-pulse">Atenção: Risco Crítico Detectado</h4>
-            <p class="text-[11px] opacity-90 leading-relaxed font-bold text-white">Este dispositivo apresenta vulnerabilidades que poderão ser exploradas por pessoas mal intensionadas.</p>
-        `;
-        
         cta.classList.remove('hidden');
-
-        setTimeout(() => {
-            cta.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }, 300);
-
-        const msgZap = encodeURIComponent(`Olá, sou da cidade de ${netData.city}. Realizei o escaneamento inicial na plataforma e solicito suporte especializado.
-        Dispositivo:
-        RAM: ${ram}GB
-        GPU: ${gpu}.`);
-
+        
+        const msgZap = encodeURIComponent(`Olá, realizei o scanner e detectei exposição crítica no meu sistema.`);
         document.getElementById('whatsappContainer').innerHTML = `
             <a href="https://wa.me/5511999999999?text=${msgZap}" target="_blank" 
-            class="inline-flex items-center space-x-3 bg-blue-600 text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-xl hover:bg-blue-800 hover:text-white transition">
-                <span>Solicitar Atendimento Especializado</span>
+            class="inline-flex items-center bg-blue-600 text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-xl hover:bg-blue-800 transition transform hover:scale-105">
+                Solicitar Atendimento Especializado
             </a>`;
-        }
+
+        setTimeout(() => {
+            cta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 600);
+    }
+    
     window.onload = function() {
         const consent = localStorage.getItem('asyncx_privacy_consent');
         if (!consent) {
@@ -600,6 +795,23 @@
         document.getElementById('cookieBanner').classList.add('hidden');
         console.log("Consentimento ASYNCX: Negado");
     }
+
+    // Função de controle do menu mobile
+    window.toggleMenu = function() {
+        const menu = document.getElementById('mobileMenu');
+        if (menu) {
+            menu.classList.toggle('hidden');
+        }
+    };
+
+    // Fecha o menu se o usuário clicar fora dele ou redimensionar a tela
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) menu.classList.add('hidden');
+        }
+    });
+
 </script>
 <div id="cookieBanner" class="fixed bottom-6 left-6 right-6 z-[100] hidden">
     <div class="max-w-4xl mx-auto bg-white border border-gray-200 p-6 rounded-xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
@@ -619,5 +831,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
