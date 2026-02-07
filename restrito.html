@@ -440,6 +440,13 @@
 
                 if (data.success) {
 
+                    const template = document.getElementById('dashboardTemplate');
+
+                    if (!document.getElementById('dashboardSection')) {
+                        const clone = template.content.cloneNode(true);
+                        document.body.appendChild(clone); 
+                    }
+
                     document.getElementById('loginSection').style.display = 'none';
                     document.getElementById('setupSection').style.display = 'none';
                     document.getElementById('dashboardSection').classList.remove('hidden');
