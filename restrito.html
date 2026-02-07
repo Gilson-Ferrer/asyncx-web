@@ -410,7 +410,6 @@
 
             const token = sessionStorage.getItem('asyncx_token');
 
-            // Se não houver token, nem tenta carregar
             if (!token) {
                 window.location.href = 'restrito.html';
                 return;
@@ -441,11 +440,11 @@
                 if (data.success) {
 
                     const template = document.getElementById('dashboardTemplate');
-
-                    if (!document.getElementById('dashboardSection')) {
-                        const clone = template.content.cloneNode(true);
-                        document.body.appendChild(clone); 
-                    }
+                    const footer = document.querySelector('footer');
+                    const existingDash = document.getElementById('dashboardSection');
+                    if (existingDash) existingDash.remove();
+                    const clone = template.content.cloneNode(true);
+                    document.body.insertBefore(clone, footer);
 
                     document.getElementById('loginSection').style.display = 'none';
                     document.getElementById('setupSection').style.display = 'none';
