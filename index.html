@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Frame-Options" content="DENY">
     <title>ASYNCX | Soluções em TI e Segurança Digital</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
     <style>
         .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px); border: 1px solid rgba(229, 231, 235, 0.5); }
         .premium-shadow { filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1)); }
@@ -477,6 +481,9 @@
             </div>
             <div class="pt-8 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center text-[10px] font-bold text-gray-300 uppercase tracking-widest text-center md:text-left gap-4">
                 <p>© 2026 ASYNCX - TODOS OS DIREITOS RESERVADOS.</p>
+                    <span class="text-[12px] font-black uppercase text-gray-400">
+                        Infraestrutura protegida por <span class="text-orange-500 font-bold">Cloudflare WAF</span>
+                    </span>
                 <p>SOLUÇÕES EM TI E SEGURANÇA DIGITAL</p>
             </div>
         </div>
@@ -509,6 +516,7 @@
         </div>
     </div>
 <script>
+    const API_URL = 'https://api.asyncx.com.br';
     document.getElementById('formContato').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -553,7 +561,7 @@
         };
 
         try {
-            const response = await fetch('https://asyncx-backend.onrender.com/api/telegram-notify', {
+            const response = await fetch(`${API_URL}/api/telegram-notify`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

@@ -246,13 +246,16 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center text-[10px] font-bold text-gray-300 uppercase tracking-widest text-center md:text-left gap-4">
                 <p>© 2026 ASYNCX - TODOS OS DIREITOS RESERVADOS.</p>
+                <span class="text-[12px] font-black uppercase text-gray-400">
+                    Infraestrutura protegida por <span class="text-orange-500 font-bold">Cloudflare WAF</span>
+                </span>
                 <p>SOLUÇÕES EM TI E SEGURANÇA DIGITAL</p>
             </div>
         </div>
     </footer>
 
     <script>
-        const API_URL = 'https://asyncx-backend.onrender.com/api';
+        const API_URL = 'https://api.asyncx.com.br/api';
         function validarForcaSenha(senha) {
             const minComprimento = senha.length >= 8;
             const temMaiuscula = /[A-Z]/.test(senha);
@@ -676,7 +679,7 @@
             };
 
             try {
-                const response = await fetch('https://asyncx-backend.onrender.com/api/telegram-notify', {
+                const response = await fetch(`${API_URL}/telegram-notify`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
