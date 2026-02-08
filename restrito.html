@@ -413,7 +413,7 @@
             btn.disabled = false; 
             btn.innerText = "Entrar"; 
         }
-        
+
         async function carregarDashboard(userBasicData) {
             const token = sessionStorage.getItem('asyncx_token');
 
@@ -503,12 +503,14 @@
                                 const btnClasse = isPago ? 'bg-emerald-600' : 'bg-black';
 
                                 div.className = `glass p-6 rounded-[30px] flex justify-between items-center border border-slate-50 hover:shadow-lg transition-all duration-300 w-full mb-4`;
+                                
+                                // 🛡️ Criamos a estrutura, mas deixamos o campo de descrição vazio com um ID único
                                 div.innerHTML = `
                                     <div class="flex flex-col gap-1 flex-1">
                                         <span class="px-3 py-1 rounded-full text-[7px] font-black uppercase tracking-tighter w-fit ${statusClasse}">
                                             ${bill.STATUS_PAGO}
                                         </span>
-                                        <p class="text-[10px] font-black text-gray-800 uppercase mt-2">${bill.DESCRICAO || 'Serviço de Segurança'}</p>
+                                        <p id="desc-text-${bill.ASAAS_PAYMENT_ID}" class="text-[10px] font-black text-gray-800 uppercase mt-2"></p>
                                     </div>
                                     <div class="hidden md:flex flex-col items-center flex-1">
                                         <p class="text-[11px] font-black text-blue-600">R$ ${Number(bill.VALOR).toFixed(2)}</p>
@@ -520,10 +522,15 @@
                                         </a>
                                     </div>
                                 `;
+
                                 fList.appendChild(div);
+
+                                // 🛡️ Injeção Segura: O innerText neutraliza qualquer tag HTML maliciosa
+                                const pDesc = document.getElementById(`desc-text-${bill.ASAAS_PAYMENT_ID}`);
+                                if (pDesc) {
+                                    pDesc.innerText = bill.DESCRICAO || 'Serviço de Segurança';
+                                }
                             });
-                        } else {
-                            fList.innerHTML = '<p class="text-[9px] text-gray-400 italic text-center col-span-2 py-8 uppercase font-bold tracking-widest">Aguardando geração de faturamento...</p>';
                         }
                         
                         window.scrollTo(0,0);
