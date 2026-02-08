@@ -379,7 +379,7 @@
             const mfaToken = document.getElementById('mfaTokenLogin').value;
             const btn = document.getElementById('btnLogin');
 
-            if(!email || !senha || !mfaToken) return alert("Preencha tudo.");
+            if(!email || !senha || !mfaToken) return alert("Preencha todos os campos.");
             
             btn.disabled = true;
             btn.innerText = "AUTENTICANDO...";
@@ -394,8 +394,13 @@
 
                 if (response.ok) {
                     sessionStorage.setItem('asyncx_token', result.token); 
-                    
-                    carregarDashboard(result.data);
+
+                    btn.innerText = "ACESSO PERMITIDO!";
+                    btn.classList.replace('bg-blue-600', 'bg-green-600');
+
+                    setTimeout(() => {
+                        carregarDashboard(result.data);
+                    }, 200);
                 } else {
                     alert(result.message);
                 }
