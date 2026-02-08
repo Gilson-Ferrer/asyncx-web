@@ -412,7 +412,6 @@
             }
         }
         async function carregarDashboard(userBasicData) {
-
             const token = sessionStorage.getItem('asyncx_token');
 
             if (!token) {
@@ -429,9 +428,7 @@
                 document.getElementById('clienteNome').innerText = userBasicData.nome.toUpperCase();
             }
 
-
             try {
-
                 const response = await fetch(`${API_URL}/user/dashboard-data`, {
                     method: 'GET',
                     headers: { 
@@ -443,99 +440,99 @@
                 const data = await response.json();
 
                 if (data.success) {
-
                     const template = document.getElementById('dashboardTemplate');
                     const footer = document.querySelector('footer');
                     const existingDash = document.getElementById('dashboardSection');
+                    
                     if (existingDash) existingDash.remove();
+                    
                     const clone = template.content.cloneNode(true);
                     document.body.insertBefore(clone, footer);
 
-                    document.getElementById('loginSection').style.display = 'none';
-                    document.getElementById('setupSection').style.display = 'none';
-                    document.getElementById('dashboardSection').classList.remove('hidden');
-                    document.getElementById('btnSair').classList.remove('hidden');
-         
-                    const p = data.perfil;
+                    window.requestAnimationFrame(() => {
+                        
+                        document.getElementById('loginSection').style.display = 'none';
+                        document.getElementById('setupSection').style.display = 'none';
+                        document.getElementById('dashboardSection').classList.remove('hidden');
+                        document.getElementById('btnSair').classList.remove('hidden');
+                
+                        const p = data.perfil;
 
-                    document.getElementById('clienteNome').innerText = p.NOME_EXIBICAO.toUpperCase();
-                    document.getElementById('perfilDoc').innerText = p.DOCUMENTO_IDENTIDADE || "NÃO INFORMADO";
-                    document.getElementById('perfilEnd').innerText = p.ENDERECO_COMPLETO || "NÃO INFORMADO";
-                    
-                    const led = document.getElementById('statusLed');
-                    const txt = document.getElementById('statusTxt');
-                    const servTxt = document.getElementById('servicoTxt');
+                        document.getElementById('clienteNome').innerText = p.NOME_EXIBICAO.toUpperCase();
+                        document.getElementById('perfilDoc').innerText = p.DOCUMENTO_IDENTIDADE || "NÃO INFORMADO";
+                        document.getElementById('perfilEnd').innerText = p.ENDERECO_COMPLETO || "NÃO INFORMADO";
+                        
+                        const led = document.getElementById('statusLed');
+                        const txt = document.getElementById('statusTxt');
+                        const servTxt = document.getElementById('servicoTxt');
 
-                    if (p.TIPO_SERVICO === 'MENSAL') {
+                        if (p.TIPO_SERVICO === 'MENSAL') {
+                            led.className = "text-5xl mb-2 led-pulse"; 
+                            txt.innerText = `PROTEGIDO (${p.QTD_DISPOSITIVOS} DEVICES)`;
+                            txt.className = "text-[10px] font-bold uppercase tracking-widest text-green-600";
+                            servTxt.innerText = "Monitoramento Ativo";
+                        } else {
+                            led.className = "text-5xl mb-2 led-fixed"; 
+                            txt.innerText = "SERVIÇO CONCLUÍDO";
+                            txt.className = "text-[10px] font-bold uppercase tracking-widest text-blue-600";
+                            servTxt.innerText = "Serviços Diversos";
+                        }
 
-                        led.className = "text-5xl mb-2 led-pulse"; 
-                        txt.innerText = `PROTEGIDO (${p.QTD_DISPOSITIVOS} DEVICES)`;
-                        txt.className = "text-[10px] font-bold uppercase tracking-widest text-green-600";
-                        servTxt.innerText = "Monitoramento Ativo";
-                    } else {
+                        const dList = document.getElementById('docsList');
+                        dList.innerHTML = ''; 
+                        if (data.documentos && data.documentos.length > 0) {
+                            data.documentos.forEach(doc => {
+                                const btn = document.createElement('a');
+                                btn.href = doc.URL_PDF; 
+                                btn.target = "_blank";
+                                btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-800 border border-gray-100 hover:bg-white hover:border-blue-600 transition mb-2";
+                                btn.innerText = `📄 ${doc.NOME_EXIBICAO}`;
+                                dList.appendChild(btn);
+                            });
+                        } else {
+                            dList.innerHTML = '<p class="text-[10px] text-gray-400 uppercase text-center py-4">Nenhum laudo disponível</p>';
+                        }
 
-                        led.className = "text-5xl mb-2 led-fixed"; 
-                        txt.innerText = "SERVIÇO CONCLUÍDO";
-                        txt.className = "text-[10px] font-bold uppercase tracking-widest text-blue-600";
-                        servTxt.innerText = "Serviços Diversos";
-                    }
+                        const fList = document.getElementById('financeList');
+                        fList.innerHTML = ''; 
 
-                    const dList = document.getElementById('docsList');
-                    dList.innerHTML = ''; 
-                    if (data.documentos && data.documentos.length > 0) {
-                        data.documentos.forEach(doc => {
-                            const btn = document.createElement('a');
-                            btn.href = doc.URL_PDF; 
-                            btn.target = "_blank";
-                            btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-800 border border-gray-100 hover:bg-white hover:border-blue-600 transition mb-2";
-                            btn.innerText = `📄 ${doc.NOME_EXIBICAO}`;
-                            dList.appendChild(btn);
-                        });
-                    } else {
-                        dList.innerHTML = '<p class="text-[10px] text-gray-400 uppercase text-center py-4">Nenhum laudo disponível</p>';
-                    }
+                        if (data.financeiro && data.financeiro.length > 0) {
+                            data.financeiro.forEach(bill => {
+                                const div = document.createElement('div');
+                                const isPago = bill.STATUS_PAGO === 'PAGO';
+                                const statusClasse = isPago ? 'status-pago' : 'status-pendente';
+                                const btnTexto = isPago ? 'RECIBO' : 'EFETUAR PAGAMENTO';
+                                const btnClasse = isPago ? 'bg-emerald-600' : 'bg-black';
 
-                    const fList = document.getElementById('financeList');
-                    fList.innerHTML = ''; 
-
-                    if (data.financeiro && data.financeiro.length > 0) {
-                        data.financeiro.forEach(bill => {
-                            const div = document.createElement('div');
-                            const isPago = bill.STATUS_PAGO === 'PAGO';
-                            const statusClasse = isPago ? 'status-pago' : 'status-pendente';
-                            const btnTexto = isPago ? 'RECIBO' : 'EFETUAR PAGAMENTO';
-                            const btnClasse = isPago ? 'bg-emerald-600' : 'bg-black';
-
-                            div.className = `glass p-6 rounded-[30px] flex justify-between items-center border border-slate-50 hover:shadow-lg transition-all duration-300 w-full mb-4`;
-                            
-                            const dataVenc = new Date(bill.DATA_VENCIMENTO).toLocaleDateString('pt-BR');
-                            
-                            div.innerHTML = `
-                                <div class="flex flex-col gap-1 flex-1">
-                                    <span class="px-3 py-1 rounded-full text-[7px] font-black uppercase tracking-tighter w-fit ${statusClasse}">
-                                        ${bill.STATUS_PAGO}
-                                    </span>
-                                    <p class="text-[10px] font-black text-gray-800 uppercase mt-2">${bill.DESCRICAO || 'Serviço de Segurança'}</p>
-                                </div>
-
-                                <div class="hidden md:flex flex-col items-center flex-1">
-                                    <p class="text-[11px] font-black text-blue-600">R$ ${Number(bill.VALOR).toFixed(2)}</p>
-                                    <p class="text-[8px] text-gray-400 uppercase font-bold tracking-widest">Vencimento: ${dataVenc}</p>
-                                </div>
-
-                                <div class="flex flex-col items-end flex-1">
-                                    <a href="${bill.LINK_BOLETO || '#'}" target="_blank" 
-                                    class="${btnClasse} text-white px-6 py-3 rounded-2xl text-[8px] font-black uppercase tracking-widest hover:opacity-80 transition shadow-md">
-                                        ${btnTexto}
-                                    </a>
-                                    <p class="md:hidden text-[7px] text-gray-400 uppercase font-bold mt-1">${dataVenc}</p>
-                                </div>
-                            `;
-                            fList.appendChild(div);
-                        });
-                    } else {
-                        fList.innerHTML = '<p class="text-[9px] text-gray-400 italic text-center col-span-2 py-8 uppercase font-bold tracking-widest">Aguardando geração de faturamento...</p>';
-                    }
+                                div.className = `glass p-6 rounded-[30px] flex justify-between items-center border border-slate-50 hover:shadow-lg transition-all duration-300 w-full mb-4`;
+                                
+                                const dataVenc = new Date(bill.DATA_VENCIMENTO).toLocaleDateString('pt-BR');
+                                
+                                div.innerHTML = `
+                                    <div class="flex flex-col gap-1 flex-1">
+                                        <span class="px-3 py-1 rounded-full text-[7px] font-black uppercase tracking-tighter w-fit ${statusClasse}">
+                                            ${bill.STATUS_PAGO}
+                                        </span>
+                                        <p class="text-[10px] font-black text-gray-800 uppercase mt-2">${bill.DESCRICAO || 'Serviço de Segurança'}</p>
+                                    </div>
+                                    <div class="hidden md:flex flex-col items-center flex-1">
+                                        <p class="text-[11px] font-black text-blue-600">R$ ${Number(bill.VALOR).toFixed(2)}</p>
+                                        <p class="text-[8px] text-gray-400 uppercase font-bold tracking-widest">Vencimento: ${dataVenc}</p>
+                                    </div>
+                                    <div class="flex flex-col items-end flex-1">
+                                        <a href="${bill.LINK_BOLETO || '#'}" target="_blank" 
+                                        class="${btnClasse} text-white px-6 py-3 rounded-2xl text-[8px] font-black uppercase tracking-widest hover:opacity-80 transition shadow-md">
+                                            ${btnTexto}
+                                        </a>
+                                        <p class="md:hidden text-[7px] text-gray-400 uppercase font-bold mt-1">${dataVenc}</p>
+                                    </div>
+                                `;
+                                fList.appendChild(div);
+                            });
+                        } else {
+                            fList.innerHTML = '<p class="text-[9px] text-gray-400 italic text-center col-span-2 py-8 uppercase font-bold tracking-widest">Aguardando geração de faturamento...</p>';
+                        }
+                    }); 
 
                 } else {
                     console.error("Erro no retorno dos dados:", data.message);
