@@ -394,23 +394,26 @@
 
                 if (response.ok) {
                     sessionStorage.setItem('asyncx_token', result.token); 
-
-                    btn.innerText = "ACESSO PERMITIDO!";
-                    btn.classList.replace('bg-blue-600', 'bg-green-600');
+                    
+                    btn.innerText = "ACESSO PERMITIDO"; 
 
                     setTimeout(() => {
                         carregarDashboard(result.data);
                     }, 200);
+                    
+                    return; 
+
                 } else {
                     alert(result.message);
                 }
             } catch (err) { 
                 alert("Erro de conexão."); 
-            } finally { 
-                btn.disabled = false; 
-                btn.innerText = "Entrar"; 
             }
+
+            btn.disabled = false; 
+            btn.innerText = "Entrar"; 
         }
+        
         async function carregarDashboard(userBasicData) {
             const token = sessionStorage.getItem('asyncx_token');
 
