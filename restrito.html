@@ -157,25 +157,41 @@
             <button onclick="switchTab('tab-finance')" class="tab-btn border-b-2 border-transparent text-gray-400 text-[10px] font-black uppercase tracking-widest px-4 py-2 transition-all hover:text-blue-600">Faturamento</button>
             <button onclick="switchTab('tab-perfil')" class="tab-btn border-b-2 border-transparent text-gray-400 text-[10px] font-black uppercase tracking-widest px-4 py-2 transition-all hover:text-blue-600">Dados Pessoais</button>
         </div>
-
         <div id="tab-docs" class="tab-content fade-in">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-                <div class="glass p-10 rounded-[40px] premium-shadow text-center flex flex-col items-center justify-center">
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6">Sincronização</p>
-                    <div id="statusLed" class="text-5xl mb-2">●</div>
-                    <h3 id="statusTxt" class="text-[10px] font-bold uppercase tracking-widest">---</h3>
+            <div class="glass p-8 md:p-12 rounded-[40px] premium-shadow mb-8 flex flex-col md:flex-row items-center justify-between gap-8 border border-white/20">
+                
+                <div class="text-center md:text-left">
+                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-2">Serviço Ativo</p>
+                    <h3 id="servicoTxt" class="text-xl md:text-2xl font-bold italic tracking-tighter text-gray-900 leading-tight">---</h3>
+                    <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mt-1">Certificado pela ASYNCX</p>
                 </div>
-                <div class="glass p-10 rounded-[40px] premium-shadow flex flex-col justify-center">
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6">Serviços</p>
-                    <h3 id="servicoTxt" class="text-xl font-bold italic tracking-tighter text-gray-900">---</h3>
-                    <p class="text-[10px] text-gray-400 font-medium uppercase tracking-widest mt-2 italic">Certificado pela ASYNCX</p>
-                </div>
-                <div class="glass p-10 rounded-[40px] premium-shadow flex flex-col justify-center">
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-6 text-center">Laudos & Relatórios</p>
-                    <div id="docsList" class="space-y-3"></div>
+
+                <div class="flex items-center gap-6 bg-white/50 px-8 py-4 rounded-full border border-gray-100">
+                    <div class="text-right">
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Monitoramento</p>
+                        <p id="qtdMaquinasTxt" class="text-[10px] font-bold text-gray-800 uppercase italic"><span id="maquinasCount">0</span> Dispositivos</p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div id="statusLed" class="text-4xl leading-none">●</div>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Sincronização</p>
+                        <h3 id="statusTxt" class="text-[10px] font-bold uppercase tracking-widest text-gray-800">---</h3>
+                    </div>
                 </div>
             </div>
-        </div> <div id="tab-finance" class="tab-content hidden fade-in">
+
+            <div class="glass p-8 md:p-12 rounded-[40px] premium-shadow border border-white/20">
+                <div class="flex items-center justify-between mb-10 border-b border-gray-100 pb-6">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Relatórios e Contratoss</p>
+                    <span class="bg-gray-100 text-[8px] font-black px-3 py-1 rounded-full text-gray-500 uppercase">Documentos</span>
+                </div>
+                
+                <div id="docsList" class="flex flex-col gap-4">
+                    </div>
+            </div>
+        </div>
+        <div id="tab-finance" class="tab-content hidden fade-in">
             <div class="glass p-10 rounded-[40px] premium-shadow">
                 <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-8 text-center">Histórico Financeiro & Pagamentos</p>
                 <div id="financeList" class="flex flex-col gap-4"></div>
