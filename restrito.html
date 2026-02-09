@@ -22,10 +22,17 @@
         }
         .led-pulse { animation: pulse-green 2s infinite; color: #22c55e; } 
         .led-fixed { color: #2563eb; } 
+        .initial-hide { display: none !important; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
+    <div id="globalLoader" class="fixed inset-0 z-[999] bg-white flex flex-col items-center justify-center transition-opacity duration-500">
+        <img src="logo.png" alt="ASYNCX" class="h-16 w-auto animate-pulse mb-6">
+        <div class="flex flex-col items-center gap-3">
+            <div class="w-16 h-[2px] bg-blue-600 animate-[loading_1.5s_ease-in-out_infinite]"></div>
+            <span class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em]">Sincronizando Segurança</span>
+        </div>
+    </div>
     <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-24">
         <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
             <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-12 md:h-14 w-auto"></a> 
@@ -34,7 +41,7 @@
             </button>
         </div>
     </nav>
-<main id="loginSection" class="flex-grow flex items-center justify-center px-6 py-12 fade-in bg-gray-100">
+<main id="loginSection" class="initial-hide" class="flex-grow flex items-center justify-center px-6 py-12 fade-in bg-gray-100">
     <div class="w-full max-w-sm">
         <div class="text-center mb-10">
             <span id="labelAcesso" class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Acesso Restrito</span>
@@ -184,7 +191,7 @@
             <div class="glass p-8 md:p-12 rounded-[40px] premium-shadow border border-white/20">
                 <div class="flex items-center justify-between mb-10 border-b border-gray-100 pb-6">
                     <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Relatórios e Contratos</p>
-                    <span class="bg-gray-100 text-[8px] font-black px-3 py-1 rounded-full text-gray-500 uppercase">Clique para abrir o documento</span>
+                    <span class="bg-blue-600 text-[8px] font-white px-3 py-1 rounded-full text-gray-500 uppercase">Documentos para download</span>
                 </div>
                 
                 <div id="docsList" class="flex flex-col gap-4">
@@ -287,18 +294,39 @@
             return null; 
         }
 
-        window.onload = function() {
+        window.onload = async function() {
+            const loader = document.getElementById('globalLoader');
+            const loginSection = document.getElementById('loginSection');
             const urlParams = new URLSearchParams(window.location.search);
             const setupToken = urlParams.get('setup');
 
+            const dismissLoader = () => {
+                loader.classList.add('opacity-0');
+                setTimeout(() => loader.style.display = 'none', 500);
+            };
+
             if (setupToken) {
-                carregarSetup(setupToken);
+                await carregarSetup(setupToken);
+                dismissLoader();
                 return; 
             }
 
             const tokenSalvo = sessionStorage.getItem('asyncx_token');
             if (tokenSalvo) {
-                carregarDashboard({ nome: "" });
+                try {
+
+                    await carregarDashboard(); 
+                    dismissLoader();
+                } catch (err) {
+                    console.error("Erro ao validar sessão:", err);
+                    sessionStorage.removeItem('asyncx_token');
+                    loginSection.classList.remove('initial-hide');
+                    dismissLoader();
+                }
+            } else {
+
+                loginSection.classList.remove('initial-hide');
+                dismissLoader();
             }
 
             const consent = localStorage.getItem('asyncx_privacy_consent');
@@ -306,7 +334,7 @@
                 const banner = document.getElementById('cookieBanner');
                 if (banner) banner.classList.remove('hidden');
             }
-        }
+        };
 
         let globalNeedsMFA = false;
 
