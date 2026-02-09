@@ -526,7 +526,9 @@
                         if (data.documentos && data.documentos.length > 0) {
                             data.documentos.forEach(doc => {
                                 const btn = document.createElement('a');
-                                btn.href = `${API_URL}/api/documentos/download/${doc.DOC_ID}`; 
+                                const token = sessionStorage.getItem('asyncx_token'); 
+
+                                btn.href = `${API_URL}/documentos/download/${doc.DOC_ID}?token=${token}`; 
                                 
                                 btn.target = "_blank";
                                 btn.className = "block w-full text-center py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-800 border border-gray-100 hover:bg-white hover:border-blue-600 transition mb-2";
