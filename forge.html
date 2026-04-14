@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge OS v1.0 | Engenharia de Sistemas ASYNCX</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Fira+Code:wght@400;500&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F9F9F9; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.05); }
+        .premium-shadow { box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05); }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .forge-badge { background: linear-gradient(90deg, #1e293b, #334155); }
+
+        .hero-forge-bg {
+            background-image: url('banner_forge.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position-y: center;
+        }
+
+        .hero-forge-overlay {
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0.2) 100%);
+        }
+    </style>
+</head>
+<body class="text-slate-900 antialiased">
+
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-24">
+        <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+            <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-12 md:h-14 w-auto"></a> 
+            <a href="index.html" class="text-[10px] font-black uppercase tracking-widest text-black hover:text-blue-600 transition">Voltar ao Início</a>
+        </div>
+    </nav>
+
+<header class="relative w-full min-h-[60vh] flex items-center overflow-hidden hero-forge-bg">
+    <div class="absolute inset-0 z-0 hero-forge-overlay"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-20 w-full">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            
+            <div class="w-full md:w-2/3 text-center md:text-left">
+                <span class="text-blue-600 font-bold tracking-[0.4em] text-[10px] uppercase mb-8 block italic">
+                    A New Level for You 
+                </span>
+                
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-[0.85] text-slate-900">
+                    Gonx-linux<br>
+                    <span class="text-gray-200">Forge OS</span>
+                </h1>
+
+                <p class="text-slate-600 text-base md:text-xl mb-12 leading-relaxed max-w-xl font-medium mx-auto md:mx-0">
+                    Se você já superou o Arch Linux pelo terminal e dominou a compilação absoluta do Gentoo, chegou o momento do próximo desafio. O Gonx Forge OS é uma distro para quem não aceita nada menos que o domínio total sobre o kernel.
+                </p>
+
+                <div class="flex flex-col md:flex-row gap-5 justify-center md:justify-start">
+                    <button onclick="window.open('https://github.com/asyncx-labs/gonx-forge-os/releases/download/v1.0.0/gonx-forge-os-v1.qcow2','_blank')" 
+                            class="bg-slate-900 text-white px-10 py-5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download Release
+                    </button>
+
+                    <button onclick="window.open('https://github.com/asyncx-labs/gonx-forge-os','_blank')" 
+                            class="bg-white text-slate-900 border-2 border-slate-200 px-10 py-5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 hover:border-slate-900 transition-all shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Veja Documentação
+                    </button>
+                    <div class="flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 px-5">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> v1.0 Stable Release
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden md:block w-1/3"></div>
+
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+
+    <div class="mb-32">
+        <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-8 italic">Technical Specifications</h2>
+        <div class="glass overflow-hidden rounded-[30px] border border-white premium-shadow">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-gray-100">
+                        <th class="p-6 text-[10px] font-black uppercase tracking-widest">Componente</th>
+                        <th class="p-6 text-[10px] font-black uppercase tracking-widest">Versão / Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm code-font">
+                    <tr class="border-b border-gray-50"><td class="p-6 font-bold">Base Engine</td><td class="p-6 text-blue-600">Linux From Scratch 12.3</td></tr>
+                    <tr class="border-b border-gray-50"><td class="p-6 font-bold">Kernel</td><td class="p-6">6.13.4 (Hardened Baseline)</td></tr>
+                    <tr class="border-b border-gray-50"><td class="p-6 font-bold">Glibc</td><td class="p-6">2.41</td></tr>
+                    <tr class="border-b border-gray-50"><td class="p-6 font-bold">Architecture</td><td class="p-6 text-slate-400">x86_64 (Generic)</td></tr>
+                    <tr class="border-b border-gray-50"><td class="p-6 font-bold">Init System</td><td class="p-6">Systemd</td></tr>
+                    <tr><td class="p-6 font-bold">Default Shell</td><td class="p-6">Bash-5.2</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20 mb-32 items-center">
+    <div>
+        <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">A Forja de Sistemas</span>
+        <h2 class="text-4xl font-black tracking-tighter mb-8 leading-tight text-slate-900">Uma fundação sólida para qualquer propósito.</h2>
+            <p class="text-slate-500 leading-relaxed mb-6 font-light">
+                O Gonx Forge OS não entrega interfaces prontas. Ele entrega as ferramentas mínimas de compilação para que você assuma o controle. Equipado com <strong>SSH ativo e OpenSSL</strong> nativos, permitindo acesso imediato para expansão.
+            </p>
+        
+        <div class="grid grid-cols-2 gap-8">
+            <ul class="text-[10px] font-black text-slate-400 space-y-3 uppercase tracking-widest">
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Cybersec & CTF Lab</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Cloud Infrastructure</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Private AI Node</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Edge Computing / IoT</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Dev Sandbox (C/Rust)</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Big Data Pipeline</li>
+            </ul>
+            <ul class="text-[10px] font-black text-slate-400 space-y-3 uppercase tracking-widest">
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Desktop Environment</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Bare Metal Gaming</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Hardened Server</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Firmware Reversing</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Zero-Trust Gateway</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span> Digital Forensics Lab</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bg-slate-900 p-10 rounded-[40px] shadow-2xl">
+        <div class="code-font text-[12px] text-green-400 leading-relaxed">
+            <p class="text-white mb-4 italic"># Forge OS ASCII MOTD Preview</p>
+                <pre class="overflow-x-auto">
+----------------------------------------------
+
+   █████████                                 
+  ███▒▒▒▒▒███                                
+ ███     ▒▒▒   ██████  ████████   █████ █████
+▒███          ███▒▒███▒▒███▒▒███ ▒▒███ ▒▒███ 
+▒███    █████▒███ ▒███ ▒███ ▒███  ▒▒▒█████▒  
+▒▒███  ▒▒███ ▒███ ▒███ ▒███ ▒███   ███▒▒▒███ 
+ ▒▒█████████ ▒▒██████  ████ █████ █████ █████
+  ▒▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒  ▒▒▒▒ ▒▒▒▒▒ ▒▒▒▒▒ ▒▒▒▒▒ 
+                                             
+  --- GONX LINUX: FORGE OS - SYSTEM LAB ---
+     Built by: Gferrerh - Kernel: 6.13.4
+
+----------------------------------------------  
+                </pre>
+                <p class="mt-4 text-blue-400">-bash-5.2# _</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass p-10 md:p-16 rounded-[50px] border border-white mb-32 bg-white/50">
+    <div class="max-w-3xl mx-auto text-center">
+        <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">First Strike Challenge</span>
+        <h3 class="text-3xl font-black mb-8 tracking-tighter uppercase">Compilando seu primeiro binário</h3>
+        <p class="text-slate-500 text-sm mb-10">O Gonx Forge OS vem somente com as ferramentas básicas de construção, e como primeiro desafio, compile o <strong>nload</strong> para monitorar o tráfego de rede em tempo real.</p>
+        
+        <div class="bg-slate-900 p-8 rounded-3xl text-left shadow-inner overflow-x-auto">
+            <code class="text-green-400 text-xs leading-relaxed space-y-2 block code-font">
+                <span class="text-gray-500"># 1. Baixe o código fonte</span><br>
+                cd /sources && wget http://www.roland-riegel.de/nload/nload-0.7.4.tar.gz --no-check-certificate<br><br>
+                <span class="text-gray-500"># 2. Extraia os arquivos</span><br>
+                tar -xvf nload-0.7.4.tar.gz && cd nload-0.7.4<br><br>
+                <span class="text-gray-500"># 3. Configure o ambiente e compile</span><br>
+                ./configure --prefix=/usr && make<br><br>
+                <span class="text-gray-500"># 4. Instale no sistema</span><br>
+                make install<br><br>
+                <span class="text-gray-500"># 5. Execute</span><br>
+                nload
+            </code>
+        </div>
+    </div>
+</div>
+
+
+    <div class="mb-16">
+        <h3 class="text-2xl font-black mb-10 tracking-tighter uppercase">Boot Inicial - Proxmox/KVM</h3>
+        <div class="bg-slate-50 p-8 rounded-[30px] border border-gray-100">
+            <ol class="space-y-6 text-sm text-slate-600 leading-relaxed">
+                <li class="flex items-start"><span class="font-black text-slate-900 mr-4">1.</span> Importe o arquivo .qcow2 para o seu storage no Proxmox.</li>
+                <li class="flex items-start"><span class="font-black text-slate-900 mr-4">2.</span> Crie uma VM com 2GiB RAM e 1 vCPU (mínimo)</li>
+                <li class="flex items-start"><span class="font-black text-slate-900 mr-4">3.</span> Adicione o disco importado e defina como Boot Device.</li>
+                <li class="flex flex-col md:flex-row md:items-center gap-2">
+                    <div class="flex items-center">
+                        <span class="font-black text-slate-900 mr-4">4.</span> 
+                        <span class="text-slate-600">Acesso Padrão:</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 ml-8 md:ml-0">
+                        <span class="text-[10px] font-bold uppercase text-slate-400 tracking-tight">Login:</span>
+                        <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-900 text-[11px] font-bold">root</code>
+                        <span class="text-slate-300 mx-1 hidden md:block">|</span>
+                        <span class="text-[10px] font-bold uppercase text-slate-400 tracking-tight">Senha:</span>
+                        <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-900 text-[11px] font-bold">root</code>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+        <div class="text-center max-w-2xl mx-auto mt-12 mb-2"> <img src="logo.png" alt="AsyncX" class="h-8 mx-auto mb-4 opacity-40">
+            <p class="text-[9px] text-slate-400 uppercase tracking-[0.3em] mb-8 font-bold">
+                Um projeto mantido pela <strong>AsyncX</strong>
+            </p>
+            
+            <h4 class="text-xl font-black mb-4 uppercase tracking-tighter">Apoie o Desenvolvimento</h4>
+            <p class="text-sm text-slate-500 mb-8 leading-relaxed">
+                Este sistema é distribuído gratuitamente para fins educacionais. Se o Gonx Forge OS te ajudou a entender melhor o sistema Linux, considere apoiar o projeto.
+            </p>
+            
+            <button onclick="window.open('https://www.buymeacoffee.com/gferrerh','_blank')" 
+                    class="bg-blue-600 text-white px-10 py-4 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center mx-auto gap-2">
+                <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M202.4,121.7c-.5-1.5-1.3-3.1-2.4-4.6a29.1,29.1,0,0,0-23.7-12.8H152V32a16,16,0,0,0-16-16H48A16,16,0,0,0,32,32V160a40,40,0,0,0,40,40h64a40,40,0,0,0,40-40V144.3h11.2a29.4,29.4,0,0,0,29.3-29.3C216.5,130.3,207.2,121.7,202.4,121.7ZM160,160a24.1,24.1,0,0,1-24,24H72a24.1,24.1,0,0,1-24-24V32H136V160Zm40.5-45a13.4,13.4,0,0,1-13.3,13.3H160V118.3h16.3a13.3,13.3,0,0,1,13.3,13.3C193.3,124.7,196.1,118.1,200.5,115Z"/>
+                </svg>
+                Apoiar o Desenvolvimento (Donate)
+            </button>
+            <br><br>
+            <div class="text-center">
+                <p class="text-[9px] text-slate-400 uppercase tracking-widest mb-3 font-bold">Ou apoie via PIX</p>
+                <img src="assets/qrcode_pix_std.png"QR Code PIX" class="w-32 h-32 mx-auto rounded-xl border border-slate-100 shadow-sm mb-2">
+            </div>
+        </div>
+
+</main>
+
+    <footer class="bg-white border-t border-gray-100 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center text-[10px] font-bold text-gray-300 uppercase tracking-widest gap-4">
+                <p>© 2026 ASYNCX - TODOS OS DIREITOS RESERVADOS.</p>
+                <span class="text-[10px] font-black uppercase text-gray-400">
+                    Infraestrutura protegida por <span class="text-orange-500 font-bold">Cloudflare WAF</span>
+                </span>
+                <p>SOLUÇÕES EM TI E SEGURANÇA DIGITAL</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cookieBanner" class="fixed bottom-6 left-6 right-6 z-[100] hidden">
+        <div class="max-w-4xl mx-auto bg-white border border-gray-200 p-6 rounded-xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-left">
+                <p class="text-[11px] text-black font-black uppercase tracking-widest mb-1 font-bold">Privacidade Respeitada</p>
+                <p class="text-xs text-gray-600 leading-relaxed max-w-2xl">
+                    Utilizamos cookies estritamente técnicos para melhorar sua experiência. 
+                    Ao continuar, você aceita nossa <a href="privacidade.html" class="underline hover:text-blue-600">Política de Privacidade</a>.
+                </p>
+            </div>
+            <div class="flex items-center gap-4 shrink-0">
+                <button onclick="recusarCookies()" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-red-600 transition">Rejeitar</button>
+                <button onclick="aceitarCookies()" class="bg-black text-white px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">Aceitar Tudo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const consent = localStorage.getItem('asyncx_privacy_consent');
+            if (!consent) {
+                document.getElementById('cookieBanner').classList.remove('hidden');
+            }
+        }
+        function aceitarCookies() {
+            localStorage.setItem('asyncx_privacy_consent', 'true');
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+        function recusarCookies() {
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
