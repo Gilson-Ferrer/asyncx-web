@@ -32,12 +32,11 @@
 
     <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
-            <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-10 md:h-6 w-auto"></a> 
+            <a href="index.html"><img src="logo.png" alt="ASYNCX" class="h-6 md:h-6 w-auto"></a> 
             
             <div class="flex items-center space-x-3 md:space-x-8">
                 <div class="hidden md:flex space-x-8 text-sm font-bold tracking-tight uppercase">
                     <a href="treinamento.html" class="hover:text-blue-600 transition">Treinamento</a>
-                    <a href="ped.html" class="hover:text-blue-600 transition">P&D</a>
                     <a href="suporte.html" class="hover:text-blue-600 transition">Suporte</a>
                     <a href="index.html#contato" class="hover:text-blue-600 transition">Contato</a>
                 </div>
@@ -56,7 +55,6 @@
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full">
             <div class="flex flex-col px-6 py-4 space-y-4 text-xs font-bold tracking-widest uppercase">
                 <a href="treinamento.html" class="hover:text-blue-600 transition">Treinamento</a>
-                <a href="ped.html" class="hover:text-blue-600 transition">P&D</a>
                 <a href="suporte.html" class="hover:text-blue-600 transition">Suporte</a>
                 <a href="index.html#contato" class="hover:text-blue-600 transition">Contato</a>
             </div>
@@ -69,15 +67,15 @@
 
         <section id="validador" class="w-full max-w-4xl mx-auto">
             <div class="text-center mb-10">
-                <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Central de Confiança</span>
-                <h3 class="text-3xl md:text-5xl font-black tracking-tighter mb-4">Validação de Credencial</h3>
-                <p class="text-gray-500 text-sm max-w-lg mx-auto">Verifique a autenticidade e a integridade criptográfica dos certificados emitidos pela AsyncX Academy.</p>
+                <span class="text-blue-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-4 block">Central de Verificação</span>
+                <h3 class="text-3xl md:text-5xl font-black tracking-tighter mb-4">Validação de Certificado</h3>
+                <p class="text-gray-500 text-sm max-w-lg mx-auto">Verifique a autenticidade e a integridade dos certificados emitidos pela Asyncx.</p>
             </div>
 
             <div class="glass p-8 md:p-12 rounded-[30px] shadow-2xl border border-gray-100 relative overflow-hidden">
                 
                 <form id="formValidacao" class="flex flex-col md:flex-row gap-4 mb-2">
-                    <input type="text" id="hashInput" placeholder="Insira a Hash Única (Ex: A7X99B)" required 
+                    <input type="text" id="hashInput" placeholder="Insira a Hash do Certificado" required 
                            class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 transition font-mono uppercase text-center md:text-left text-gray-800 tracking-wider">
                     
                     <button type="submit" id="btnValidar" class="bg-blue-600 text-white px-10 py-4 rounded-xl uppercase font-black text-[11px] tracking-widest hover:bg-blue-800 transition flex-shrink-0 flex justify-center items-center shadow-lg shadow-blue-600/30">
@@ -143,21 +141,19 @@
     </footer>
 
     <script>
-        // Função do Menu Mobile (se necessário no layout)
+
         function toggleMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const API_URL = 'https://api.asyncx.com.br'; // API Principal
+            const API_URL = 'https://api.asyncx.com.br'; 
             
             const formValidacao = document.getElementById('formValidacao');
             const hashInput = document.getElementById('hashInput');
             const btnValidar = document.getElementById('btnValidar');
             const resultadoDiv = document.getElementById('resultadoValidacao');
-
-            // 1. Verifica se a URL já veio com a hash (Ex: asyncx.com.br/validar.html?id=HASH)
             const urlParams = new URLSearchParams(window.location.search);
             const urlHash = urlParams.get('id') || urlParams.get('hash');
             
@@ -166,13 +162,11 @@
                 validarCredencial(urlHash);
             }
 
-            // 2. Disparo manual pelo formulário
             formValidacao.addEventListener('submit', (e) => {
                 e.preventDefault();
                 validarCredencial(hashInput.value.trim().toUpperCase());
             });
 
-            // 3. Função de Autenticação na API
             async function validarCredencial(hash) {
                 if(!hash) return;
 
@@ -187,7 +181,7 @@
                     resultadoDiv.classList.remove('hidden');
 
                     if (json.success) {
-                        // CERTIFICADO VÁLIDO (Card Verde)
+
                         const dataEmissao = new Date(json.data.dataEmissao).toLocaleDateString('pt-BR');
                         resultadoDiv.innerHTML = `
                             <div class="p-6 md:p-8 bg-[#f0fdf4] border-2 border-green-200 rounded-2xl shadow-inner">
@@ -210,7 +204,6 @@
                             </div>
                         `;
                     } else {
-                        // CERTIFICADO INVÁLIDO (Card Vermelho)
                         resultadoDiv.innerHTML = `
                             <div class="p-6 md:p-8 bg-[#fef2f2] border-2 border-red-200 rounded-2xl shadow-inner">
                                 <div class="flex items-center gap-4 mb-4">
@@ -234,7 +227,6 @@
                     btnValidar.disabled = false;
                     btnValidar.innerHTML = 'AUTENTICAR';
                     
-                    // Limpa a URL sem dar refresh
                     window.history.replaceState({}, document.title, window.location.pathname);
                 }
             }
